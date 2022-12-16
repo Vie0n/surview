@@ -6,9 +6,9 @@ export default function RootRoute() {
   return (
     <>
       <Navbar />
-      <div>
+      <section className='mt-20 px-2'>
         <Outlet />
-      </div>
+      </section>
     </>
   )
 }
