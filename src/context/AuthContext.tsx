@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
 
 import type { 
@@ -16,7 +16,7 @@ import {
 
 
 
-export const AuthContext = createContext<AuthContextType | null>(null)
+const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
@@ -46,3 +46,5 @@ export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) =
     </AuthContext.Provider>
   )
 }
+
+export const useUserAuth = () => useContext(AuthContext) as AuthContextType

@@ -2,9 +2,7 @@
 import NavbarLink from './NavbarLink'
 
 // Context
-import type { AuthContextType } from '../@types/auth'
-import { useContext } from 'react'
-import { AuthContext } from '../context/AuthContext'
+import { useUserAuth } from '../context/AuthContext'
 
 // Icons
 import MenuIcon from '../assets/menuIcon.svg'
@@ -12,7 +10,7 @@ import SurveyIcon from '../assets/SurveyIcon.svg'
 
 
 export default function Navbar() {
-  const { user, logOut } = useContext(AuthContext) as AuthContextType
+  const { user, logOut } = useUserAuth()
 
   const handleSignOut = async () => { 
     try {

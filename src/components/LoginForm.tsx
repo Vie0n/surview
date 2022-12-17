@@ -1,15 +1,11 @@
-import { useContext } from 'react'
-
-// Context
-import type { AuthContextType } from '../@types/auth'
-import { AuthContext } from '../context/AuthContext'
+import { useUserAuth } from '../context/AuthContext'
 
 // Components
 import GoogleButton from 'react-google-button'
 
 
 export default function LoginForm() { 
-  const { googleSignIn } = useContext(AuthContext) as AuthContextType
+  const { googleSignIn } = useUserAuth()
 
   const handleGoogleSignIn = async () => {
     try {

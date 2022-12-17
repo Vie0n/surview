@@ -1,12 +1,11 @@
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { AuthContextType } from "../@types/auth"
-import { AuthContext } from "../context/AuthContext"
+import { useUserAuth } from "../context/AuthContext"
 
 
 export default function SignupRoute() {
-  const { user } = useContext(AuthContext) as AuthContextType
+  const { user } = useUserAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
