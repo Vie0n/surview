@@ -14,6 +14,14 @@ import SurveyIcon from '../assets/SurveyIcon.svg'
 export default function Navbar() {
   const { user, logOut } = useContext(AuthContext) as AuthContextType
 
+  const handleSignOut = async () => { 
+    try {
+      await logOut()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <nav className='fixed top-0 left-0 bg-gray-100 w-full shadow'>
       <div className='container m-auto flex justify-between items-center text-gray-700'>
@@ -25,7 +33,7 @@ export default function Navbar() {
           <NavbarLink to='/home' text='Strona główna' />
           <NavbarLink to='/signup' text='Rejestracja' />
           { user 
-            ? <button onClick={logOut}>Wyloguj</button>
+            ? <button onClick={handleSignOut}>Wyloguj</button>
             : <NavbarLink to='/login' text='Login' />
           } 
         </ul>
