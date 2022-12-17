@@ -13,7 +13,7 @@ export default function LoginRoute() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user) navigate('/home')
+    if (user) navigate('/profile')
   }, [user])
 
   return (
