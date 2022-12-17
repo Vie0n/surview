@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import type { 
   AuthContextType, 
   IAuthContextProps 
-} from '../@types/auth';
+} from '../@types/auth'
 
 import { 
   GoogleAuthProvider, 
@@ -12,7 +12,7 @@ import {
   signOut,
   onAuthStateChanged,
   User
-} from "firebase/auth";
+} from 'firebase/auth'
 
 
 
@@ -34,7 +34,6 @@ export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) =
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currUser) => {
       setUser(currUser)
-      console.log("USER: ", currUser)
     })
     return () => {
       unsub()
