@@ -1,5 +1,5 @@
 // Components
-import NavbarItem from './NavbarItem'
+import NavbarLink from './NavbarLink'
 
 // Context
 import type { AuthContextType } from '../@types/auth'
@@ -22,11 +22,11 @@ export default function Navbar() {
           Surview
         </h1>
         <ul className="hidden md:flex items-center pr-10 text-base font-semibold cursor-pointer">
-          <NavbarItem redirect='/home' text='Strona główna' />
-          <NavbarItem redirect='/signup' text='Rejestracja' />
+          <NavbarLink to='/home' text='Strona główna' />
+          <NavbarLink to='/signup' text='Rejestracja' />
           { user 
             ? <button onClick={logOut}>Wyloguj</button>
-            : <NavbarItem redirect='/login' text='Login' />
+            : <NavbarLink to='/login' text='Login' />
           } 
         </ul>
 
@@ -35,9 +35,9 @@ export default function Navbar() {
           <div className="absolute top-0 -right-full h-screen w-6/12 bg-white border opacity-0 group-focus:right-0 group-focus:opacity-100 transition-all duration-300">
             <h1 className="px-6 py-4 text-xl font-bold w-full">Menu</h1>
             <ul className="flex flex-col items-center w-full text-base cursor-pointer pt-3">
-              <NavbarItem type="horizontal" redirect='/home' text="Home" />
-              <NavbarItem type="horizontal" redirect='/signup' text="Rejestracja" />
-              <NavbarItem type="horizontal" redirect='/login' text="Login" />
+              <NavbarLink type="horizontal" to='/home' text="Home" />
+              <NavbarLink type="horizontal" to='/signup' text="Rejestracja" />
+              <NavbarLink type="horizontal" to='/login' text="Login" />
             </ul>
           </div>
         </button>
