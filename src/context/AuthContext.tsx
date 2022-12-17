@@ -1,34 +1,49 @@
-import { useContext, createContext } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
+
+import type { 
+  AuthContextType, 
+  IAuthContextProps 
+} from '../@types/auth';
+
 import { 
   GoogleAuthProvider, 
   signInWithRedirect,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  User
 } from "firebase/auth";
 
 
-interface IAuthContextProps {
-  children: React.ReactNode
-}
 
-const AuthContext = createContext<object | null>(null)
+export const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) => {
-  
+  const [user, setUser] = useState<User | null>(null)
+
   // Login with google
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider()
     signInWithRedirect(auth, provider)
   }
   
+  const logOut = () => {
+    signOut(auth)
+  }
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (currUser) => {
+      setUser(currUser)
+      console.log("USER: ", currUser)
+    })
+    return () => {
+      unsub()
+    }
+  }, [])
+
   return (
-    <AuthContext.Provider value={{ googleSignIn }}>
+    <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
       { children }
     </AuthContext.Provider>
   )
-}
-
-export const UserAuth = () => {
-  return useContext(AuthContext)
 }
