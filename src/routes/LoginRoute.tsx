@@ -1,8 +1,9 @@
+import LoginForm from "../components/LoginForm";
 
 export default function LoginRoute() {
   return (
     <div>
-      <p className="text-xl">LOGIN</p>
+      <LoginForm />
     </div>
   )
 }
