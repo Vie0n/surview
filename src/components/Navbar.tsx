@@ -1,15 +1,19 @@
 // Components
 import NavbarLink from './NavbarLink'
 
-// Context
+// Hooks
+import { useState } from 'react'
 import { useUserAuth } from '../context/AuthContext'
 
 // Icons
 import MenuIcon from '../assets/menuIcon.svg'
+import CloseIcon from '../assets/closeIcon.svg'
 import SurveyIcon from '../assets/SurveyIcon.svg'
 
 
+
 export default function Navbar() {
+  const [open, setOpen] = useState<boolean>(false)
   const { user } = useUserAuth()
 
   return (
@@ -21,24 +25,42 @@ export default function Navbar() {
         </h1>
         <ul className='hidden md:flex items-center pr-10 text-base font-semibold cursor-pointer'>
           <NavbarLink to='/home' text='Strona główna' />
-          <NavbarLink to='/signup' text='Rejestracja' />
+          { !user && <NavbarLink to='/signup' text='Rejestracja' /> }
           { user 
             ? <NavbarLink to='/profile' text='Profil' />
             : <NavbarLink to='/login' text='Login' />
           } 
         </ul>
 
-        <button className='block md:hidden py-3 px-4 mx-2 rounded focus:outline-none hover:bg-gray-200 group'>
+        <button 
+          onClick={() => setOpen(!open)} 
+          className='block md:hidden py-3 px-4 mx-2 rounded focus:outline-none hover:bg-gray-200'
+          >
           <img src={MenuIcon} alt='Menu' />
-          <div className='absolute top-0 -right-full h-screen w-6/12 bg-white border opacity-0 group-focus:right-0 group-focus:opacity-100 transition-all duration-300'>
-            <h1 className='px-6 py-4 text-xl font-bold w-full'>Menu</h1>
-            <ul className='flex flex-col items-center w-full text-base cursor-pointer pt-3'>
-              <NavbarLink type='horizontal' to='/home' text='Home' />
-              <NavbarLink type='horizontal' to='/signup' text='Rejestracja' />
-              <NavbarLink type='horizontal' to='/login' text='Login' />
-            </ul>
-          </div>
         </button>
+          
+            
+        <ul className={`
+          md:hidden flex flex-col shadow items-center bg-gray-100 fixed w-[60%] top-0 overflow-y-auto bottom-0 pl-2
+          duration-500 ${open ? "right-0" : "right-[-100%]"}`}
+          >
+          <div
+            className='block mt-2 mx-2 w-full'>
+            <img 
+              className='py-3 px-4 focus:outline-none cursor-pointer hover:bg-gray-200 rounded' 
+              onClick={() => setOpen(!open)} 
+              src={CloseIcon} 
+              alt='Menu' 
+              />
+          </div>
+          <h1 className='px-6 py-4 text-xl font-bold text-center w-full'>Menu</h1>
+          <NavbarLink type='horizontal' to='/home' text='Home' />
+          { !user && <NavbarLink type='horizontal' to='/signup' text='Rejestracja' /> }
+          { user 
+            ? <NavbarLink type='horizontal' to='/profile' text='Profil' />
+            : <NavbarLink type='horizontal' to='/login' text='Login' />
+          } 
+        </ul>
       </div>
     </nav>
   )
