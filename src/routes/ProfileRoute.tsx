@@ -17,17 +17,13 @@ export default function ProfileRoute() {
   }, [user])
 
   const handleSignOut = async () => { 
-    try {
-      await logOut()
-    } catch (err) {
-      console.log(err)
-    }
+    logOut().catch(err => console.error(err))
   }
 
   return (
     <div>
       <p className='text-xl'>Profil użytkownika:</p>
-      <p>Nazwa użytkownika: { user?.displayName }</p>
+      <p>Nazwa użytkownika: { user?.displayName || user?.email }</p>
       <Button color='danger' onClick={handleSignOut} text='Wyloguj' />
     </div>
   )
