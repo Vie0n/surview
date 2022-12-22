@@ -31,7 +31,7 @@ export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) =
   // Login with google
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider()
-    signInWithRedirect(auth, provider)
+    return signInWithRedirect(auth, provider)
   }
 
   // Login with email and password

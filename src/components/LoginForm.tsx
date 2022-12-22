@@ -17,21 +17,15 @@ export default function LoginForm() {
   const handleEmailSignIn = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
 
-    try {
-      await emailSignIn(email, pwd)
-      navigate('/profile')
-    } catch (err) {
-      console.log(err)
-    }
+    emailSignIn(email, pwd)
+    .then(() => navigate('/profile'))
+    .catch(err => console.error(err))
   }
 
   const handleGoogleSignIn = async () => {
-    try {
-      googleSignIn()
-      navigate('/profile')
-    } catch (err) {
-      console.log(err)
-    }
+    googleSignIn()
+    .then(() => navigate('/profile'))
+    .catch(err => console.error(err))
   }
 
   return (
