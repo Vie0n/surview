@@ -34,31 +34,33 @@ export default function Navbar() {
 
         <button 
           onClick={() => setOpen(!open)} 
-          className='block md:hidden py-3 px-4 mx-2 rounded focus:outline-none hover:bg-gray-200'
-          >
+          className='block md:hidden py-3 px-4 mx-2 rounded focus:outline-none hover:bg-gray-200 
+            active:bg-gray-300 transition duration-150 hover:bg-gray-200'
+        >
           <img src={MenuIcon} alt='Menu' />
         </button>
           
             
         <ul className={`
-          md:hidden flex flex-col shadow items-center bg-gray-100 fixed w-[60%] top-0 overflow-y-auto bottom-0 pl-2
-          duration-500 ${open ? "right-0" : "right-[-100%]"}`}
-          >
-          <div
-            className='block mt-2 mx-2 w-full'>
+          md:hidden flex flex-col shadow items-center bg-gray-100 fixed w-[60%] top-0 font-semibold 
+          overflow-y-auto bottom-0 pl-2 duration-500 ${open ? "right-0" : "right-[-100%]"}`}
+        >
+          <div className='block mt-2 w-full'>
             <img 
-              className='py-3 px-4 focus:outline-none cursor-pointer hover:bg-gray-200 rounded' 
+              className='py-3 px-4 focus:outline-none cursor-pointer active:bg-gray-300 
+              transition duration-150 hover:bg-gray-200 rounded' 
               onClick={() => setOpen(!open)} 
               src={CloseIcon} 
               alt='Menu' 
               />
           </div>
+
           <h1 className='px-6 py-4 text-xl font-bold text-center w-full'>Menu</h1>
-          <NavbarLink type='horizontal' to='/home' text='Home' />
-          { !user && <NavbarLink type='horizontal' to='/signup' text='Rejestracja' /> }
+          <NavbarLink role='mobile' to='/home' text='Home' />
+          { !user && <NavbarLink role='mobile' to='/signup' text='Rejestracja' /> }
           { user 
-            ? <NavbarLink type='horizontal' to='/profile' text='Profil' />
-            : <NavbarLink type='horizontal' to='/login' text='Login' />
+            ? <NavbarLink role='mobile' to='/profile' text='Profil' />
+            : <NavbarLink role='mobile' to='/login' text='Login' />
           } 
         </ul>
       </div>

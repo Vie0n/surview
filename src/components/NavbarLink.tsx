@@ -7,7 +7,10 @@ export default function NavbarLink(props: INavbarLinkProps) {
 
   if (role === 'mobile') {
     return (
-      <Link {...props} className='hover:text-blue-600 py-4 px-6 w-full'>
+      <Link {...props} 
+        className='block hover:bg-gray-200 hover:text-blue-700 py-4 px-6 
+        rounded-bl-lg rounded-tl-lg w-full active:bg-gray-300 transition duration-150
+        ease-in-out'>
         { text }
       </Link>
     )
