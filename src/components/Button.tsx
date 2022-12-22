@@ -15,7 +15,6 @@ export default function Button(props: IButtonProps) {
     <div className="flex space-x-2 justify-center">
       <button 
         {...props}
-        type="button" 
         className={`inline-block px-6 py-2.5  text-white font-medium text-md leading-tight 
           uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg 
           focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 
