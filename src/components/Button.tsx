@@ -2,7 +2,21 @@ import { IButtonProps } from '../@types/button'
 
 
 export default function Button(props: IButtonProps) {
-  const { text, color, className } = props
+  const { text, color, className, disabled } = props
+
+  if (disabled) {
+    return (
+      <div className="flex space-x-2 justify-center">
+        <button 
+          {...props}
+          className={`inline-block px-6 py-2.5  text-white font-medium text-md leading-tight 
+          uppercase rounded bg-gray-400 transition duration-150 ${ className }`}
+        >
+          { text }
+        </button>
+      </div>
+    )
+  }
 
   const classColor = {
     primary: 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:bg-blue-700',
@@ -16,9 +30,9 @@ export default function Button(props: IButtonProps) {
       <button 
         {...props}
         className={`inline-block px-6 py-2.5  text-white font-medium text-md leading-tight 
-          uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg 
-          focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 
-          ease-in-out ` + `${ classColor } ${ className }`}
+        uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg 
+        focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 
+        ease-in-out ${ classColor } ${ className }`}
       >
         { text }
       </button>
