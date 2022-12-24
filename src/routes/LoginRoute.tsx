@@ -51,7 +51,8 @@ export default function LoginRoute() {
       <h1 className='text-2xl font-bold py-4'>Panel logowania</h1>
 
       <FromInput
-        fieldName='Adres email' 
+        fieldName='Adres email'
+        type='email'
         onChange={ev => setEmail(ev.target.value)}
         isvalid={validEmail} 
         errormsg={'Niepoprawny adres email.'} 
