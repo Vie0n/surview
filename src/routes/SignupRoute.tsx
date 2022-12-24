@@ -69,6 +69,7 @@ export default function SignupRoute() {
       <h1 className='text-2xl font-bold py-4'>Panel rejestracji</h1>
       <FromInput
         fieldName='Adres email' 
+        type='text'
         onChange={ev => setEmail(ev.target.value)}
         isvalid={validEmail} 
         errormsg={'Niepoprawny adres email.'} 
