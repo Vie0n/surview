@@ -7,6 +7,7 @@ import ErrorRoute from './routes/ErrorRoute'
 import HomeRoute from './routes/HomeRoute'
 import LoginRoute from './routes/LoginRoute'
 import SignupRoute from './routes/SignupRoute'
+import ProfileRoute from './routes/ProfileRoute'
 
 const AppRouter = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '/signup',
         element: <SignupRoute />
+      },
+      {
+        path: '/profile',
+        element: <ProfileRoute />
       }
     ]
   }
