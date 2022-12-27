@@ -8,6 +8,8 @@ import HomeRoute from './routes/HomeRoute'
 import LoginRoute from './routes/LoginRoute'
 import SignupRoute from './routes/SignupRoute'
 import ProfileRoute from './routes/ProfileRoute'
+import SurveyListRoute from './routes/SurveyListRoute'
+import SingleSurveyRoute from './routes/SingleSurveyRoute'
 
 const AppRouter = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const AppRouter = createBrowserRouter([
       {
         path: '/profile',
         element: <ProfileRoute />
+      },
+      {
+        path: '/surveys',
+        element: <SurveyListRoute />
+      },
+      {
+        path: '/survey/:id',
+        element: <SingleSurveyRoute />
       }
     ]
   }
