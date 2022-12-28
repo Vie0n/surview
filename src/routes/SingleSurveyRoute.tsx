@@ -1,7 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import MultipleAnswerTemplate from "../components/SurveyFormTemplates/MultipleAnswerFormTemplate";
+import OpenTemplate from "../components/SurveyFormTemplates/OpenTemplate";
+import SingleAnswerTemplate from "../components/SurveyFormTemplates/SingleAnswerFormTemplate";
+import SliderTemplate from "../components/SurveyFormTemplates/SliderTemplate";
+
+
+import { SurveyContext } from "../services/SurveyContext";
 
 export default function SingleSurveyRoute() {
+    const [questions, setQuestions] = useState<Array<{}>>([])
     const [currentQuestionID, setCurrentQuestionID] = useState(0)
     const [stateAnswers, setStateAnswers] = useState<Array<{}>>([])
     const [answer, setAnswer] = useState<string>("0")
@@ -12,38 +20,48 @@ export default function SingleSurveyRoute() {
     let tempString:string;
     let answers = []
 
-    let mockData = [{
-        id: 0,
-        question: "Single Question Test",
-        type: "Single",
-        answers: {
-            0: "a",
-            1: "b",
-            2: "c",
-            3: "d"
-        }
-    },{
-        id: 1,
-        question: "Multiple Question Test",
-        type: "Multiple",
-        answers: {
-            0: "a",
-            1: "b",
-            2: "c",
-            3: "d",
-            4: "e"
-        }
-    },{
-        id: 2,
-        question: "Slider Question Test",
-        type: "Slider"
-    },{
-        id: 3,
-        question: "Open Question Test",
-        type: "Open"
-    }]
+    useEffect(function(){
+        dataCall();
+      },[])
+    console.log(questions);
+
+    function dataCall(){
+        const mockData = [{
+            id: 0,
+            question: "Single Question Test",
+            type: "Single",
+            answers: {
+                0: "a",
+                1: "b",
+                2: "c",
+                3: "d"
+            }
+        },{
+            id: 1,
+            question: "Multiple Question Test",
+            type: "Multiple",
+            answers: {
+                0: "a",
+                1: "b",
+                2: "c",
+                3: "d",
+                4: "e"
+            }
+        },{
+            id: 2,
+            question: "Slider Question Test",
+            type: "Slider"
+        },{
+            id: 3,
+            question: "Open Question Test",
+            type: "Open"
+        }];
+        setQuestions(mockData);
+        console.log (mockData);
+    }
 
 
+/*
     function fillFormWithAnswersSingle(availableAnswers: {}){
         let result = Object.keys(availableAnswers).map((key) =>{
             return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
@@ -101,11 +119,12 @@ export default function SingleSurveyRoute() {
 
 
     function multipleAnswerTemplate(){
-        let availableAnswers = mockData[currentQuestionID].answers;
+        let currentQuestion = questions[currentQuestionID];
+        let availableAnswers = questions[currentQuestionID].answers;
         console.log(availableAnswers);
         return(
             <form>
-                <h1>{mockData[currentQuestionID].question}</h1><br/>
+                <h1>{questions[currentQuestionID].question}</h1><br/>
                 <div>
                     {fillFormWithAnswersMultiple(availableAnswers)}
                 </div>
@@ -119,7 +138,7 @@ export default function SingleSurveyRoute() {
     function sliderTemplate(){
         return(
             <form>
-                <h1>{mockData[currentQuestionID].question}</h1><br/>
+                <h1>{questions[currentQuestionID].question}</h1><br/>
                 <div>
                     <input type="range" name="rangeTemplate" id="slider" min="1" max="10" defaultValue="0" onChange={()=>{
                         setAnswer((document.getElementById("slider") as HTMLInputElement).value)
@@ -136,7 +155,7 @@ export default function SingleSurveyRoute() {
     function openTemplate(){
         return(
             <form>
-                <h1>{mockData[currentQuestionID].question}</h1><br/>
+                <h1>{questions[currentQuestionID].question}</h1><br/>
                 <div>
                     <input type="text" id="open"></input>
                 </div>
@@ -147,36 +166,37 @@ export default function SingleSurveyRoute() {
         )
     }
     
-    
+  */  
     
     
     function surveyManager(){
-        console.log(mockData[currentQuestionID].type);
-        switch(mockData[currentQuestionID].type){
-            case "Single": return(<>{singleAnswerTemplate()}</>)
-                break;
-            case "Multiple": return(<>{multipleAnswerTemplate()}</>)
-                break;
-            case "Slider": return(<>{sliderTemplate()}</>)
-                break;
-            case "Open": return(<>{openTemplate()}</>)
-                break;
-            default:
-                <div>
-                    <p>Error</p>
-                </div>
+        if (typeof (questions[currentQuestionID]) !== "undefined"){
+            switch(questions[currentQuestionID].type){
+                case "Single": return(<><SingleAnswerTemplate/></>)
+                    break;
+                case "Multiple": return(<><MultipleAnswerTemplate/></>)
+                    break;
+                case "Slider": return(<><SliderTemplate/></>)
+                    break;
+                case "Open": return(<><OpenTemplate/></>)
+                    break;
+                default:
+                    <div>
+                        <p></p>
+                    </div>
+            }
         }
     }
-
+/*
     function surveySubmitManager(){
-        console.log(mockData[currentQuestionID].type);
+        console.log(questions[currentQuestionID].type);
         let result:{ [x: string]: never; }[];
         let availableAnswers:{ 0: string; 1: string; 2: string; 3: string; 4?: undefined; } | { 0: string; 1: string; 2: string; 3: string; 4: string; } | undefined
         tempString = "";
-        switch(mockData[currentQuestionID].type){
+        switch(questions[currentQuestionID].type){
             case "Single":
                 tempString = `{"id": ${currentQuestionID}`;
-                availableAnswers = mockData[currentQuestionID].answers;
+                availableAnswers = questions[currentQuestionID].answers;
                 console.log(availableAnswers);
                 result = Object.keys(availableAnswers).map((key) =>{
                     return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
@@ -192,7 +212,7 @@ export default function SingleSurveyRoute() {
                 break;
             case "Multiple":
                 tempString = `{"id": ${currentQuestionID}`;
-                availableAnswers = mockData[currentQuestionID].answers;
+                availableAnswers = questions[currentQuestionID].answers;
                 console.log(availableAnswers);
                 result = Object.keys(availableAnswers).map((key) =>{
                     return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
@@ -306,16 +326,18 @@ export default function SingleSurveyRoute() {
         }
     }
     
-    
+    */
     
     
     
     return (
-      <div>
-        <p className='text-xl'>Survey ID: {id}</p>
-        <div>
-            {surveyManager()}
-        </div>
-      </div>
+        <SurveyContext.Provider value = {{questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers}}>
+            <div>
+                <p className='text-xl'>Survey ID: {id}</p>
+                <div>
+                    {surveyManager()}
+                </div>
+            </div>
+        </SurveyContext.Provider>
     )
   }
