@@ -30,6 +30,10 @@ export default function Navbar() {
         <ul className='hidden md:flex items-center text-base font-semibold cursor-pointer'>
           <NavbarLink to='/home' text='Strona główna' />
           <NavbarLink to='/surveys' text='Ankiety' />
+          {user ?
+          <NavbarLink to='/addsurvey' text='Dodaj Ankiete' /> :
+          <></>
+          }
         </ul>
         <ul className='hidden md:flex items-center text-base font-semibold cursor-pointer'>
           { user ? 
@@ -71,6 +75,12 @@ export default function Navbar() {
             role='mobile' 
             to='/surveys' 
             text='Ankiety' 
+          />
+          <NavbarLink 
+            icon={<SurveyIcon className='mr-2' />} 
+            role='mobile' 
+            to='/addsurvey' 
+            text='Dodaj Ankiete' 
           />
           { !user && 
             <NavbarLink 
