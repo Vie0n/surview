@@ -1,45 +1,36 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import SurveyButtonsManager from "../../services/SurveyButtonManager";
 import { SurveyContext } from "../../services/SurveyContext";
 
-export default function SingleAnswerTemplate( props: {
-        questions: {
-            [x: number]: {
-                question: string;
-                type: string;
-                answers: {
-                    0: string;
-                    1: string;
-                    2: string;
-                    3: string;
-                    4?: undefined;
-                }
-            };
-        };
-        currentQuestionID: number;
-    })
+export default function SingleAnswerTemplate()
     {
+        const [answer, setAnswer] = useState <number>();
+        const [isValid, setIsValid] = useState <boolean>(false);
 
         const {questions, currentQuestionID} = useContext(SurveyContext);
 
-        console.log(props);
         console.log(questions);
-        //let availableAnswers = props.questions[props.currentQuestionID].answers;
-        //console.log(availableAnswers);
 
-        function fillFormWithAnswersSingle(availableAnswers: {}){
-            let result = Object.keys(availableAnswers).map((key) =>{
-                return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
-                })
-            })
+        function checkValidity(availableAnswers: []){
+            for(let i=0; i<availableAnswers.length; i++){
+                if((document.getElementById(i.toString()) as HTMLInputElement).checked) setIsValid(true);
+            }
+        }
+
+
+        function fillFormWithAnswersSingle(availableAnswers: []){
             return(
-                result.map((item, index)=>{
-                    console.log(item[index]);
+                availableAnswers.map((item, index)=>{
                     return(
-                        <>
-                            <label>{item[index]}</label>
-                            <input type="radio" name="SingleAnswer" id={index.toString()}/><br/>
-                        </>
+                        <li key={index}>
+                            <label>{availableAnswers[index]}</label>
+                            <input type="radio" name="SingleAnswer" id={index.toString()}
+                                onChange={(ev)=>{
+                                    checkValidity(availableAnswers);
+                                    setAnswer(index);
+                                }}
+                            /><br/>
+                        </li>
                     )
                 })
             )
@@ -58,7 +49,7 @@ export default function SingleAnswerTemplate( props: {
                 <div>
                     {fillFormWithAnswersSingle(questions[currentQuestionID].answers)}
                 </div>
-                <SurveyButtonsManager/>
+                <SurveyButtonsManager {...{answer, isValid}}/>
             </form>
         )
     }

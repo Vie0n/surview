@@ -1,18 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import SurveyButtonsManager from "../../services/SurveyButtonManager";
 import { SurveyContext } from "../../services/SurveyContext";
+import FromInput from "../FormInput";
 
 export default function OpenTemplate()
     {
+        const [answer, setAnswer] = useState <string>('');
+        const [isValid, setValid] = useState <boolean>(false);
         const {questions, currentQuestionID} = useContext(SurveyContext);
         return(
             <form>
-                <h1>{questions[currentQuestionID].question}</h1><br/>
+                <FromInput fieldName={questions[currentQuestionID].question} isvalid={false} errormsg={undefined} type="text" id="open"
+                    onChange={(ev)=>{
+                        setAnswer(ev.target.value);
+                        if (ev.target.value !== '') setValid(true);
+                        else setValid(false);
+                    }}
+                />
                 <div>
-                    <input type="text" id="open"></input>
-                </div>
-                <div>
-                    <SurveyButtonsManager/>
+                    <SurveyButtonsManager {...{answer, isValid}}/>
                 </div>
             </form>
         )

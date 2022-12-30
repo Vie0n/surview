@@ -1,28 +1,52 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import SurveyButtonsManager from "../../services/SurveyButtonManager";
 import { SurveyContext } from "../../services/SurveyContext";
 
 export default function MultipleAnswerTemplate()
     {
+        const [answer, setAnswer] = useState <Array<boolean>>([]);
+        const [isValid, setIsValid] = useState <boolean>(false);
+
         const {questions, currentQuestionID} = useContext(SurveyContext);
 
-        console.log(questions);
-        //let availableAnswers = props.questions[props.currentQuestionID].answers;
-        //console.log(availableAnswers);
+        useEffect(()=>{
+            setAnswerArray();
+        },[])
 
-        function fillFormWithAnswersMultiple(availableAnswers: {}){
-            let result = Object.keys(availableAnswers).map((key) =>{
-                return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
-                })
-            })
+        console.log(questions);
+
+        function setAnswerArray(){
+            let tempArray:boolean[] = [];
+            for(let i=0; i<questions[currentQuestionID].answers.length; i++){
+                tempArray[i] = false;
+            }
+            setAnswer(tempArray);
+        }
+
+
+        function checkValidity(availableAnswers: []){
+            let validCheck = false
+            for(let i=0; i<availableAnswers.length; i++){
+                if((document.getElementById(i.toString()) as HTMLInputElement).checked) validCheck = true;
+            }
+            setIsValid(validCheck);
+        }
+        
+        function fillFormWithAnswersMultiple(availableAnswers: []){
+            console.log(answer);
             return(
-                result.map((item, index)=>{
-                    console.log(item[index]);
+                availableAnswers.map((item, index)=>{
                     return(
-                        <>
-                            <label>{item[index]}</label>
-                            <input type="checkbox" name="MultipleAnswer" id={index.toString()}/><br/>
-                        </>
+                        <li key={index}>
+                            <label>{availableAnswers[index]}</label>
+                            <input type="checkbox" name="MultipleAnswer" id={index.toString()}
+                            onChange={(ev)=>{
+                                    checkValidity(availableAnswers);
+                                    let newAnswer = answer;
+                                    newAnswer[index] = ev.target.checked;
+                                    setAnswer(newAnswer);
+                                }}/><br/>
+                        </li>
                     )
                 })
             )
@@ -37,7 +61,7 @@ export default function MultipleAnswerTemplate()
                 <div>
                     {fillFormWithAnswersMultiple(questions[currentQuestionID].answers)}
                 </div>
-                <SurveyButtonsManager/>
+                <SurveyButtonsManager {...{answer, isValid}}/>
             </form>
         )
     }

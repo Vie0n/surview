@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import Button from "../components/Button";
 import { SurveyContext } from "./SurveyContext";
 
-export default function SurveyButtonsManager(){
+export default function SurveyButtonsManager( props: { answer: number|Array<boolean>|string; isValid: boolean; } ){
     const [lastQuestionID, setLastQuestionID] = useState<number>();
     const {questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers} = useContext(SurveyContext);
 
@@ -20,52 +21,42 @@ export default function SurveyButtonsManager(){
         }
     }
 
+    function addAnswer(){
+        console.log(currentQuestionID);
+        surveySubmitManager();
+        let oldAnswers = stateAnswers;
+        tempString += "}";
+        console.log("State of tempString: " + tempString);
+        oldAnswers.push(JSON.parse(tempString));
+        console.log(oldAnswers);
+        setStateAnswers(oldAnswers);
+    }
+
+    function undoAnswer(){
+        let oldAnswers = stateAnswers;
+        oldAnswers.splice(currentQuestionID - 1, 1);
+        console.log(currentQuestionID);
+        console.log(oldAnswers);
+        setStateAnswers(oldAnswers);
+    }
+
     function surveySubmitManager(){
-        let result:{ [x: string]: never; }[];
-        let availableAnswers:{ 0: string; 1: string; 2: string; 3: string; 4?: undefined; } | { 0: string; 1: string; 2: string; 3: string; 4: string; } | undefined
         tempString = "";
         switch(questions[currentQuestionID].type){
             case "Single":
-                tempString = `{"id": ${currentQuestionID}`;
-                availableAnswers = questions[currentQuestionID].answers;
-                console.log(availableAnswers);
-                result = Object.keys(availableAnswers).map((key) =>{
-                    return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
-                    })
-                })
-                console.log(result);
-                return(
-                    result.map((item, index)=>{
-                        console.log(`${index}: ${(document.getElementById(`${index}`) as HTMLInputElement).checked}`);
-                        tempString += `, "${index}": ${(document.getElementById(`${index}`) as HTMLInputElement).checked}`
-                    })
-                )
+                console.log(props.answer);
+                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
                 break;
             case "Multiple":
-                tempString = `{"id": ${currentQuestionID}`;
-                availableAnswers = questions[currentQuestionID].answers;
-                console.log(availableAnswers);
-                result = Object.keys(availableAnswers).map((key) =>{
-                    return ({[key]: availableAnswers[key as keyof typeof availableAnswers]
-                    })
-                })
-                console.log(result);
-                return(
-                    result.map((item, index)=>{
-                        console.log(`${index}: ${(document.getElementById(`${index}`) as HTMLInputElement).checked}`);
-                        tempString += `, "${index}": ${(document.getElementById(`${index}`) as HTMLInputElement).checked}`
-                    })
-                )
+                console.log(props.answer);
+                tempString = `{"id": "${currentQuestionID}", "answer": [${props.answer}]`;
                 break;
             case "Slider":
-                tempString = `{"id": ${currentQuestionID}`;
-                //console.log(`Slider: ${(document.getElementById("slider") as HTMLInputElement).value}`);
-                tempString += `, "score": ${(document.getElementById("slider") as HTMLInputElement).value}`
+                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
                 break;
             case "Open":
-                tempString = `{"id": ${currentQuestionID}`;
-                console.log(`Open: ${(document.getElementById("open") as HTMLInputElement).value}`);
-                tempString += `, "answer": "${(document.getElementById("open") as HTMLInputElement).value}"`
+                console.log(props.answer);
+                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
                 break;
             default:
                 <div>
@@ -75,88 +66,46 @@ export default function SurveyButtonsManager(){
     }
 
 
-
-    //console.log(`Button Manager: ${currentQuestionID}`)
     if (lastQuestionID !== undefined){
-        //console.log(lastQuestionID);
-        //console.log(currentQuestionID)
         switch(currentQuestionID){
             case 0:
                 return(
                     <div>
-                        <button onClick={(ev)=>{
+                        <Button onClick={(ev) => {
                             ev.preventDefault();
-                            setCurrentQuestionID(currentQuestionID+1);
-                            console.log(currentQuestionID);
-                            surveySubmitManager();
-                            let oldAnswers = stateAnswers;
-                            tempString+="}";
-                            console.log("State of tempString: "+tempString)
-                            oldAnswers.push(JSON.parse(tempString));
-                            console.log(oldAnswers);
-                            setStateAnswers(oldAnswers);
-                        }}
-                        >
-                             Next
-                        </button>
+                            setCurrentQuestionID(currentQuestionID + 1);
+                            addAnswer();
+                        } } text={"Next"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
             case lastQuestionID:
                 return(
                     <div>
-                        <button onClick={(ev)=>{
+                        <Button onClick={(ev) => {
                             ev.preventDefault();
-                            let oldAnswers = stateAnswers;
-                            oldAnswers.splice(currentQuestionID-1, 1);
-                            setCurrentQuestionID(currentQuestionID-1);
-                            console.log(currentQuestionID)
-                            console.log(oldAnswers)
-                            setStateAnswers(oldAnswers);
-                        }}>Previous</button>
-                        <button onClick={(ev)=>{
+                            setCurrentQuestionID(currentQuestionID - 1);
+                            undoAnswer();
+                        } } text={"previous"} color={"primary"} />
+                        <Button onClick={(ev) => {
                             //TODO: Create a function for putting answers into the database
                             ev.preventDefault();
-                            console.log(currentQuestionID);
-                            surveySubmitManager();
-                            let oldAnswers = stateAnswers;
-                            tempString+="}";
-                            console.log("State of tempString: "+tempString)
-                            oldAnswers.push(JSON.parse(tempString));
-                            console.log(oldAnswers);
-                            setStateAnswers(oldAnswers);
-                        }}
-                            >Finish</button>
+                            addAnswer();
+                        } } text={"Finish"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
             default:
                 return(
                     <div>
-                        <button onClick={(ev)=>{
+                        <Button onClick={(ev) => {
                             ev.preventDefault();
-                            let oldAnswers = stateAnswers;
-                            oldAnswers.splice(currentQuestionID-1, 1);
-                            setCurrentQuestionID(currentQuestionID-1);
-                            console.log(currentQuestionID)
-                            console.log(oldAnswers)
-                            setStateAnswers(oldAnswers);
-                        }}>
-                                Previous
-                            </button>
-                        <button onClick={(ev)=>{
+                            setCurrentQuestionID(currentQuestionID - 1);
+                            undoAnswer();
+                        } } text={"previous"} color={"primary"} />
+                        <Button onClick={(ev) => {
                             ev.preventDefault();
-                            setCurrentQuestionID(currentQuestionID+1);
-                            console.log(currentQuestionID);
-                            surveySubmitManager();
-                            let oldAnswers = stateAnswers;
-                            tempString+="}";
-                            console.log("State of tempString: "+tempString)
-                            oldAnswers.push(JSON.parse(tempString));
-                            console.log(oldAnswers);
-                            setStateAnswers(oldAnswers);
-                        }}
-                            >
-                                Next
-                        </button>
+                            setCurrentQuestionID(currentQuestionID + 1);
+                            addAnswer();
+                        } } text={"Next"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
         }

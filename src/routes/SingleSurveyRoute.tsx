@@ -25,23 +25,12 @@ export default function SingleSurveyRoute() {
             id: 0,
             question: "Single Question Test",
             type: "Single",
-            answers: {
-                0: "a",
-                1: "b",
-                2: "c",
-                3: "d"
-            }
+            answers: ["a","b","c","d"]
         },{
             id: 1,
             question: "Multiple Question Test",
             type: "Multiple",
-            answers: {
-                0: "a",
-                1: "b",
-                2: "c",
-                3: "d",
-                4: "e"
-            }
+            answers: ["a","b","c","d","e"]
         },{
             id: 2,
             question: "Slider Question Test",
