@@ -11,7 +11,7 @@ export default function AddSurveyNameForm()
             <form>
                     <FormInputValidate fieldName={"Nazwa Ankiety"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
                     setSurveyName(ev.target.value);
-                } }/>
+                } } defaultValue={""}/>
                 <Button onClick={(ev) => {
                     ev.preventDefault();
                     console.log("Click");
