@@ -28,7 +28,7 @@ export default function AddSurveyRoute() {
     return (
         <>
             <div>
-                <p className='text-xl'>New Survey</p>
+                <p className='text-xl'>Nowa Ankieta</p>
             </div>
             <AddSurveyContext.Provider value={{surveyName, setSurveyName, setPageState, stateNewSurvey, setStateNewSurvey, questionIndex, setQuestionIndex}}>
                 {newSurveyManager()}
