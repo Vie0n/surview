@@ -9,9 +9,12 @@ export default function SurveyOverview(){
     function renderAnswers(questionIndex:number){
         console.log(stateNewSurvey[questionIndex].answers);
         return(
-            stateNewSurvey[questionIndex].answers.map((answer, answerIndex)=>{
+            stateNewSurvey[questionIndex].answers.map((answer:string, answerIndex:number)=>{
+                console.log(answer);
                 return(
-                    <li>{answer}</li>
+                    <tr key={answerIndex}>
+                        <td>{answer}</td>
+                    </tr>
                 )
             })
         )
@@ -19,20 +22,28 @@ export default function SurveyOverview(){
 
 
     function renderQuestions(){
-        console.log(stateNewSurvey);
+        //console.log(stateNewSurvey);
         if (stateNewSurvey.length <= 0){
-            console.log("empty");
-            return(<></>)
+            //console.log("empty");
+            return(<div>
+                <h1>Brak pytań</h1>
+            </div>)
         } else{
-            console.log("not empty");
+            //console.log("not empty");
             return(
-                stateNewSurvey.map((question, questionIndex)=>{
-                    console.log(question);
+                stateNewSurvey.map((question:Array<{id:number, question:string, type:string, answers:Array<[]>}>, questionIndex:number)=>{
+                    //console.log(question.id);
                     return(
-                        <>
-                            <h4>{question.question}</h4>
-                            <ul>{renderAnswers(questionIndex)}</ul>
-                        </>
+                        <table key={questionIndex}>
+                            <thead>
+                                <tr>
+                                    <th>{`Pytanie #${questionIndex+1}: ${question.question}`}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renderAnswers(questionIndex)}
+                            </tbody>
+                        </table>
                     )
                 })
             )
@@ -44,13 +55,16 @@ export default function SurveyOverview(){
     return(
         <div>
             <div>
+                <p className='text-xl'>{surveyName}</p>
+            </div>
+            <div>
                 {renderQuestions()}
             </div>
-            <Button text={"New Question"} color={"primary"} onClick={() =>{
+            <Button text={"Dodaj Pytanie"} color={"primary"} onClick={() =>{
                 setPageState("addQuestion");
             }}/>
             { questionIndex>0 ? 
-                <Button text={"Upload Survey"} color={"primary"}/> :
+                <Button text={"Publikuj Ankiete"} color={"primary"}/> :
                 <></>
             }
         </div>
