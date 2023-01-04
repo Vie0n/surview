@@ -11,7 +11,7 @@ export default function AddQuestionForm(){
     const[questionName, setQuestionName] = useState <string>('');
     const[answer, setAnswer] = useState <string[]>([]);
     const[validAnswers, setValidAnswers] = useState <boolean[]>([]);
-    const{stateNewSurvey, setStateNewSurvey, questionIndex, setQuestionIndex, setPageState} = useContext(AddSurveyContext);
+    const{stateNewSurvey, questionIndex, setQuestionIndex, setPageState} = useContext(AddSurveyContext);
 
     let tempString:string = "answers: {";
 
@@ -20,38 +20,17 @@ export default function AddQuestionForm(){
     },[])
 
 
-    function resetValidity(){
-        //console.log("reset");
-        let resetValidAnswers:Array<boolean> = [];
-        //console.log(answerCount);
-        for(var i = 0; answerCount > i; i++){
-            console.log(i);
-            resetValidAnswers[i] = false
-        }
-        //console.log(resetValidAnswers);
-        setValidAnswers([...resetValidAnswers]);
-        //console.log("Reset Complete");
-    }
-
 
     function checkValidity(questionType:string){
         let validName = false, isValid = false, validAnswersBool = false;
-        //console.log(questionType);
-        //console.log(questionName)
         if(questionName === '' || questionName === undefined) validName = false;
         else validName = true;
         if (questionType === "single" || questionType === "multiple"){
-            //console.log(questionType);
-            //console.log(validAnswers);
-            //console.log(validAnswers.every(Boolean))
             validAnswersBool = (validAnswers.every(Boolean) && validAnswers.length > 0)
         }
         else validAnswersBool = true;
-        //console.log(validName);
-        //console.log(validAnswersBool);
         if (validName && validAnswersBool) isValid = true;
         else isValid = false
-        //console.log(isValid);
         return isValid;
     }
 
@@ -59,25 +38,17 @@ export default function AddQuestionForm(){
     function fillAnswerValidity(answerCount:number){
         let newValidAnswers = [];
         for(var i = 0; i < answerCount; i++){
-            //console.log(answerCount)
-            //console.log(answer[i])
             if (answer[i] === undefined || answer[i] === '' || answer[i] === null) newValidAnswers[i] = false;
             else newValidAnswers[i] = true;
         }
-        //console.log(newValidAnswers);
         setValidAnswers(newValidAnswers);
     }
 
     function keepOldAnswers(answerCount:number){
         const oldAnswers:Array<string> = [];
-        //setOldAnswer([]);
-        console.log(oldAnswers);
-        console.log(answerCount);
         for(var i = 0; i < answerCount; i++){
-            console.log(i);
             oldAnswers[i] = answer[i];
         }
-        console.log(oldAnswers);
         setAnswer(oldAnswers);
         fillAnswerValidity(answerCount);
     }
@@ -115,7 +86,6 @@ export default function AddQuestionForm(){
 
 
     function typeManager(){
-        //console.log(questionType);
         switch(questionType){
             case "single":
                 return(
@@ -174,17 +144,10 @@ export default function AddQuestionForm(){
                 {typeManager()}
                 <Button text={"Akceptuj"} color={"primary"} onClick={(ev)=>{
                     ev.preventDefault();
-                    //console.log(answer);
-                    //console.log(answer[0]);
                     let newStateNewSurvey = stateNewSurvey;
-                    let newString:string = `{"id": ${questionIndex},"question": "${questionName}","type": "${questionType}", "answers": {}}`
-                    //console.log(newString);
-                    let newJSON = JSON.parse(newString)
+                    let newJSON = {"question": questionName,"type": questionType, "answers": {}}
                     newJSON.answers = answer;
-                    //console.log(newJSON);
-                    //console.log(newJSON.answers)
-                    newStateNewSurvey.push(newJSON);
-                    //console.log(newStateNewSurvey);
+                    newStateNewSurvey.questions.push(newJSON);
                     setQuestionIndex(questionIndex+1);
                     setPageState("overview");
                 }} disabled={!checkValidity(questionType)}/>

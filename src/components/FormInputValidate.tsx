@@ -1,4 +1,3 @@
-import type { IFormInputProps } from "../@types/formInput";
 import React, { useState } from "react";
 import FromInput from "./FormInput";
 import { IFormInputValidate } from "../@types/formInputValidate";
