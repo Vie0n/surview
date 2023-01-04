@@ -31,7 +31,11 @@ export default function Navbar() {
           <NavbarLink to='/home' text='Strona główna' />
           <NavbarLink to='/surveys' text='Ankiety' />
           {user ?
-          <NavbarLink to='/addsurvey' text='Dodaj Ankiete' /> :
+          <>
+            <NavbarLink to='/addsurvey' text='Dodaj Ankiete' />
+            <NavbarLink to='/mysurvey' text='Moje Ankiety' />
+          </>
+          :
           <></>
           }
         </ul>

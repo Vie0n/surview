@@ -11,6 +11,7 @@ import ProfileRoute from './routes/ProfileRoute'
 import SurveyListRoute from './routes/SurveyListRoute'
 import SingleSurveyRoute from './routes/SingleSurveyRoute'
 import AddSurveyRoute from './routes/AddSurveyRoute'
+import MySurveysRoute from './routes/MySurveysRoute'
 
 const AppRouter = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const AppRouter = createBrowserRouter([
       {
         path: '/addsurvey',
         element: <AddSurveyRoute />
+      },
+      {
+        path: '/mysurvey',
+        element: <MySurveysRoute />
       }
     ]
   }
