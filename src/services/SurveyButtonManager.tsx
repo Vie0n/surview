@@ -14,55 +14,23 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
 
     function getLastQuestionID(){
         if (questions !== "undefined"){
-            console.log(questions);
-            console.log(questions.length);
             let last:number = questions.length - 1;
             setLastQuestionID(last);
         }
     }
 
     function addAnswer(){
-        console.log(currentQuestionID);
-        surveySubmitManager();
         let oldAnswers = stateAnswers;
-        tempString += "}";
-        console.log("State of tempString: " + tempString);
-        oldAnswers.push(JSON.parse(tempString));
-        console.log(oldAnswers);
+        let newJSON = {"id": currentQuestionID, "answer": {}}
+        newJSON.answer = props.answer;
+        oldAnswers.push(newJSON);
         setStateAnswers(oldAnswers);
     }
 
     function undoAnswer(){
         let oldAnswers = stateAnswers;
         oldAnswers.splice(currentQuestionID - 1, 1);
-        console.log(currentQuestionID);
-        console.log(oldAnswers);
         setStateAnswers(oldAnswers);
-    }
-
-    function surveySubmitManager(){
-        tempString = "";
-        switch(questions[currentQuestionID].type){
-            case "Single":
-                console.log(props.answer);
-                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
-                break;
-            case "Multiple":
-                console.log(props.answer);
-                tempString = `{"id": "${currentQuestionID}", "answer": [${props.answer}]`;
-                break;
-            case "Slider":
-                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
-                break;
-            case "Open":
-                console.log(props.answer);
-                tempString = `{"id": "${currentQuestionID}", "answer": "${props.answer}"`;
-                break;
-            default:
-                <div>
-                    <p>Error</p>
-                </div>
-        }
     }
 
 

@@ -15,7 +15,7 @@ export default function SurveyListRoute() {
         let mockData = [{
             id: 1,
             name: "Survey 1",
-            imgURL: "https://www.formbot.com/images/create-a-survey.jpg"
+            imgURL: ""
         },{
             id: 2,
             name: "Survey 2",
@@ -52,7 +52,7 @@ export default function SurveyListRoute() {
             result.map((item, i) => {
                 //console.log(item[i].name);
                 return(
-                    <tr onClick={()=>{goToSurvey(item[i].id)}}>
+                    <tr key={i} onClick={()=>{goToSurvey(item[i].id)}}>
                         <td>
                             {item[i].name}
                         </td>

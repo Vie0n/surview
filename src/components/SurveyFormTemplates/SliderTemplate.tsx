@@ -6,7 +6,7 @@ export default function SliderTemplate()
     {
         const {questions, currentQuestionID} = useContext(SurveyContext);
         const [isValid, setValid] = useState<boolean>(true);
-        const [answer, setAnswer] = useState<string>("0")
+        const [answer, setAnswer] = useState<string>("1")
         return(
             <form>
                 <h1>{questions[currentQuestionID].question}</h1><br/>
