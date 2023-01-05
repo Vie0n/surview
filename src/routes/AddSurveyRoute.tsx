@@ -6,6 +6,9 @@ import SurveyOverview from "../components/AddSurveyComponents/SurveyOverview";
 import { useUserAuth } from "../context/AuthContext";
 import { AddSurveyContext } from "../services/AddSurveyContext";
 
+import { db } from "../firebase";
+import {collection, getDocs} from "firebase/firestore";
+
 export default function AddSurveyRoute() {
     const [surveyName, setSurveyName] = useState <string>('')
     const [questionIndex, setQuestionIndex] = useState <number>(0);
@@ -17,10 +20,10 @@ export default function AddSurveyRoute() {
     const { user } = useUserAuth()
     
     useEffect(()=>{
-        console.log(user);
         let newSurvey = {
             "uid":user !== null ? user.uid : "?",
             "name":"",
+            "imgURL":"",
             "questions":[]
         };
         setStateNewSurvey(newSurvey);

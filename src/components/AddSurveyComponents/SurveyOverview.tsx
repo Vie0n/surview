@@ -2,9 +2,18 @@ import { useContext, useEffect, useState } from "react";
 import { AddSurveyContext } from "../../services/AddSurveyContext";
 import Button from "../Button";
 
+import { db } from "../../firebase";
+import {collection, addDoc} from "firebase/firestore";
+
+import { useNavigate } from "react-router-dom"
+
 export default function SurveyOverview(){
 
     const [isVisible, setIsVisible] = useState<Array<boolean>>([]);
+
+    const surveyCollectionRef = collection(db, "survey-list");
+
+    const navigate = useNavigate()
 
     useEffect(()=>{
         let newIsVisible:Array<boolean> = [];
@@ -16,6 +25,11 @@ export default function SurveyOverview(){
     },[])
 
     const {surveyName, stateNewSurvey, setStateNewSurvey, questionIndex, setQuestionIndex, setPageState, setActiveQuestion, setActiveQuestionIndex} = useContext(AddSurveyContext);
+
+    async function addToDatabase(payload:object){
+        await addDoc(surveyCollectionRef, payload);
+    }
+
 
     function renderAnswers(questionIndex:number){
         if(isVisible[questionIndex]){
@@ -73,7 +87,6 @@ export default function SurveyOverview(){
                                     <th>
                                         <Button text={"Usuń"} color={"danger"}onClick={() =>{
                                             let newSurvey = stateNewSurvey;
-                                            console.log(newSurvey);
                                             newSurvey.questions.splice(questionID, 1);
                                             setQuestionIndex(questionIndex-1);
                                             setStateNewSurvey(...[newSurvey]);
@@ -108,6 +121,9 @@ export default function SurveyOverview(){
                 <Button text={"Publikuj Ankiete"} color={"primary"} onClick={() =>{
                     let newStateNewSurvey = stateNewSurvey;
                     newStateNewSurvey.name = surveyName;
+                    addToDatabase(newStateNewSurvey);
+                    alert("Dodano Ankiete.")
+                    navigate("/mysurvey")
                 }}/> :
                 <></>
             }

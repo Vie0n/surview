@@ -2,15 +2,25 @@ import { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import { SurveyContext } from "./SurveyContext";
 
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
+
 export default function SurveyButtonsManager( props: { answer: number|Array<boolean>|string; isValid: boolean; } ){
     const [lastQuestionID, setLastQuestionID] = useState<number>();
-    const {questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers} = useContext(SurveyContext);
+    const {questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers, surveyID, recipt, navigate} = useContext(SurveyContext);
+
+    const surveyAnswersRef = collection(db, "survey-answers");
 
     let tempString:string;
     
     useEffect(()=>{
         getLastQuestionID();
     },[])
+
+
+    async function addToDatabase(payload:object){
+        await addDoc(surveyAnswersRef, payload);
+    }
 
     function getLastQuestionID(){
         if (questions !== "undefined"){
@@ -32,6 +42,13 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
         oldAnswers.splice(currentQuestionID - 1, 1);
         setStateAnswers(oldAnswers);
     }
+
+    function publishAnswers(){
+        let newJSON = {"surveyID": surveyID, "recipt": recipt, "answers": []};
+        newJSON.answers = stateAnswers;
+        addToDatabase(newJSON);
+    }
+
 
 
     if (lastQuestionID !== undefined){
@@ -55,9 +72,11 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             undoAnswer();
                         } } text={"previous"} color={"primary"} />
                         <Button onClick={(ev) => {
-                            //TODO: Create a function for putting answers into the database
                             ev.preventDefault();
                             addAnswer();
+                            publishAnswers();
+                            alert("Ankieta została wysłana.")
+                            navigate("/surveys/")
                         } } text={"Finish"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
