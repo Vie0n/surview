@@ -1,32 +1,23 @@
 import { useEffect, useState } from "react";
+import { db } from "../firebase";
+import {collection, getDocs} from "firebase/firestore";
 
 import { useNavigate } from "react-router-dom"
 
 export default function SurveyListRoute() {
 
-    const[surveyList, setSurveyList] = useState<{}>([]);
+    const [surveyList, setSurveyList] = useState<{}>([]);
+    const surveyCollectionRef = collection(db, "survey-list");
     const navigate = useNavigate()
 
-    useEffect(()=>{setSurveyList(fetchSurveyList)},[]
+    useEffect(()=>{
+        async function getSurveyList() {
+            const surveyListData = await getDocs(surveyCollectionRef);
+            setSurveyList(surveyListData.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        }
+        getSurveyList();
+    },[]
     )
-
-    function fetchSurveyList(){
-        //TODO: Real data fetch from Firebase
-        let mockData = [{
-            id: 1,
-            name: "Survey 1",
-            imgURL: ""
-        },{
-            id: 2,
-            name: "Survey 2",
-            imgURL: ""
-        },{
-            id: 3,
-            name: "Survey 3",
-            imgURL: ""
-        }]
-        return mockData;
-    }
 
 
     function renderSurveyList(){
@@ -50,7 +41,6 @@ export default function SurveyListRoute() {
         //put data into the table
         return(
             result.map((item, i) => {
-                //console.log(item[i].name);
                 return(
                     <tr key={i} onClick={()=>{goToSurvey(item[i].id)}}>
                         <td>
@@ -67,8 +57,7 @@ export default function SurveyListRoute() {
     }
     
     
-    function goToSurvey(id: number){
-        console.log(`/survey/${id}`)
+    function goToSurvey(id: string){
        navigate(`/survey/${id}`)
     }
     

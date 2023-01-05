@@ -7,7 +7,7 @@ import FormInputValidate from "../FormInputValidate";
 export default function AddQuestionForm(){
 
     const[answerCount, setAnswerCount] = useState <number>(2);
-    const[questionType, setQuestionType] = useState <string>("single");
+    const[questionType, setQuestionType] = useState <string>("Single");
     const[questionName, setQuestionName] = useState <string>('');
     const[answer, setAnswer] = useState <string[]>([]);
     const[validAnswers, setValidAnswers] = useState <boolean[]>([]);
@@ -25,7 +25,7 @@ export default function AddQuestionForm(){
         let validName = false, isValid = false, validAnswersBool = false;
         if(questionName === '' || questionName === undefined) validName = false;
         else validName = true;
-        if (questionType === "single" || questionType === "multiple"){
+        if (questionType === "Single" || questionType === "Multiple"){
             validAnswersBool = (validAnswers.every(Boolean) && validAnswers.length > 0)
         }
         else validAnswersBool = true;
@@ -87,7 +87,7 @@ export default function AddQuestionForm(){
 
     function typeManager(){
         switch(questionType){
-            case "single":
+            case "Single":
                 return(
                     <>
                         <select id="answerCount" defaultValue={2} onChange={(ev)=>{
@@ -99,7 +99,7 @@ export default function AddQuestionForm(){
                         {answerManager()}
                     </>
                 )
-            case "multiple":
+            case "Multiple":
                 return(
                     <>
                         <select id="answerCount" defaultValue={2} onChange={(ev)=>{
@@ -111,9 +111,9 @@ export default function AddQuestionForm(){
                             {answerManager()}
                     </>
                     )
-            case "slider":
+            case "Slider":
                 break
-            case "open":
+            case "Open":
                 break
 
         }
@@ -128,17 +128,17 @@ export default function AddQuestionForm(){
                 } } defaultValue={""}/>
                 <div>
                     <label>Typ pytania</label>
-                    <select id="questionType" defaultValue={"single"} onChange={(ev)=>{
+                    <select id="questionType" defaultValue={"Single"} onChange={(ev)=>{
                         if(ev.target.value === "slider" || ev.target.value == "open") {
                             setAnswer([]);
                         };
                         fillAnswerValidity(answerCount);
                         setQuestionType(ev.target.value)
                     }}>
-                        <option value="single">Jednokrotnego wyboru</option>
-                        <option value="multiple">Wielokrotnego wyboru</option>
-                        <option value="slider">Skala 1-10</option>
-                        <option value="open">Otwarte</option>
+                        <option value="Single">Jednokrotnego wyboru</option>
+                        <option value="Multiple">Wielokrotnego wyboru</option>
+                        <option value="Slider">Skala 1-10</option>
+                        <option value="Open">Otwarte</option>
                     </select>
                 </div>
                 {typeManager()}

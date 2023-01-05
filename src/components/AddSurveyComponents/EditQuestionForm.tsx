@@ -33,7 +33,7 @@ export default function EditQuestionForm(){
         let validName = false, isValid = false, validAnswersBool = false;
         if(questionName === '' || questionName === undefined) validName = false;
         else validName = true;
-        if (questionType === "single" || questionType === "multiple"){
+        if (questionType === "Single" || questionType === "Multiple"){
             validAnswersBool = (validAnswers.every(Boolean) && validAnswers.length > 0)
         }
         else validAnswersBool = true;
@@ -93,7 +93,7 @@ export default function EditQuestionForm(){
 
     function typeManager(){
         switch(questionType){
-            case "single":
+            case "Single":
                 return(
                     <>
                         <select id="answerCount" defaultValue={answerCount} onChange={(ev)=>{
@@ -105,7 +105,7 @@ export default function EditQuestionForm(){
                         {answerManager()}
                     </>
                 )
-            case "multiple":
+            case "Multiple":
                 return(
                     <>
                         <select id="answerCount" defaultValue={answerCount} onChange={(ev)=>{
@@ -117,9 +117,9 @@ export default function EditQuestionForm(){
                             {answerManager()}
                     </>
                     )
-            case "slider":
+            case "Slider":
                 break
-            case "open":
+            case "Open":
                 break
 
         }
@@ -137,10 +137,10 @@ export default function EditQuestionForm(){
                     <select id="questionType" defaultValue={activeQuestion.type} onChange={(ev)=>{
                         setQuestionType(ev.target.value)
                     }}>
-                        <option value="single">Jednokrotnego wyboru</option>
-                        <option value="multiple">Wielokrotnego wyboru</option>
-                        <option value="slider">Skala 1-10</option>
-                        <option value="open">Otwarte</option>
+                        <option value="Single">Jednokrotnego wyboru</option>
+                        <option value="Multiple">Wielokrotnego wyboru</option>
+                        <option value="Slider">Skala 1-10</option>
+                        <option value="Open">Otwarte</option>
                     </select>
                 </div>
                 {typeManager()}
@@ -148,7 +148,7 @@ export default function EditQuestionForm(){
                     ev.preventDefault();
                     let newStateNewSurvey = stateNewSurvey;
                     let newJSON = {"question": questionName,"type": questionType, "answers": {}}
-                    if (questionType === "single" || questionType === "multiple") newJSON.answers = answer; 
+                    if (questionType === "Single" || questionType === "Multiple") newJSON.answers = answer; 
                     else newJSON.answers = [];
                     newStateNewSurvey.questions[activeQuestionIndex] = newJSON;
                     setStateNewSurvey(newStateNewSurvey);
