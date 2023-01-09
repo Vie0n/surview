@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom"
 import MySingleSurvey from "../components/MySurveysComponents/MySingleSurvey";
 import MySingleSurveyDetails from "../components/MySurveysComponents/MySingleSurveyDetails";
 import { MySurveyContext } from "../services/MySurveyContex";
+
+import { db } from "../firebase";
+import {collection, getDocs, query, where} from "firebase/firestore";
+import { useUserAuth } from "../context/AuthContext";
 
 export default function MySurveysRoute() {
 
@@ -13,28 +16,20 @@ export default function MySurveysRoute() {
     const[page, setPage] = useState('list');
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
     const [activeQuestion, setActiveQuestion] = useState <{}>({});
-    const navigate = useNavigate()
 
-    useEffect(()=>{setSurveyList(fetchSurveyList)},[]
+    const { user } = useUserAuth()
+
+    const mySurveyCollectionQuery = query(collection(db, "survey-list"), where("uid", "==", user.uid));
+
+    useEffect(()=>{
+        async function getSurveyList() {
+            const surveyListData = await getDocs(mySurveyCollectionQuery);
+            setSurveyList(surveyListData.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        }
+        getSurveyList();
+    },[]
     )
 
-    function fetchSurveyList(){
-        //TODO: Real data fetch from Firebase based on user
-        let mockData = [{
-            id: 1,
-            name: "Survey 1",
-            imgURL: ""
-        },{
-            id: 2,
-            name: "Survey 2",
-            imgURL: ""
-        },{
-            id: 3,
-            name: "Survey 3",
-            imgURL: ""
-        }]
-        return mockData;
-    }
 
 
     function renderSurveyList(){
@@ -58,7 +53,6 @@ export default function MySurveysRoute() {
         //put data into the table
         return(
             result.map((item, i) => {
-                //console.log(item[i].name);
                 return(
                     <tr key={i} onClick={()=>{goToSurvey(i)}}>
                         <td>
