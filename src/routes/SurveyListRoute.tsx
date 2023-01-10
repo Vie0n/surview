@@ -70,9 +70,6 @@ export default function SurveyListRoute() {
                 <p className='text-xl'>Survey List:</p>
             </div>
             <div>
-                <input placeholder="Search"/>
-            </div>
-            <div>
                 {renderSurveyList()}
             </div>
         </>
