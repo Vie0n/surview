@@ -95,9 +95,6 @@ export default function MySurveysRoute() {
                 <p className='text-xl'>Moje Ankiety</p>
             </div>
             <div>
-                <input placeholder="Search"/>
-            </div>
-            <div>
                 {renderPage()}
             </div>
         </MySurveyContext.Provider>
