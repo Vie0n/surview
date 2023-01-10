@@ -9,8 +9,6 @@ export default function SingleAnswerTemplate()
 
         const {questions, currentQuestionID} = useContext(SurveyContext);
 
-        console.log(questions);
-
         function checkValidity(availableAnswers: []){
             for(let i=0; i<availableAnswers.length; i++){
                 if((document.getElementById(i.toString()) as HTMLInputElement).checked) setIsValid(true);

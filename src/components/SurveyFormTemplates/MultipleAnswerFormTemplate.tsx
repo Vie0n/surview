@@ -13,7 +13,6 @@ export default function MultipleAnswerTemplate()
             setAnswerArray();
         },[])
 
-        console.log(questions);
 
         function setAnswerArray(){
             let tempArray:boolean[] = [];
@@ -33,7 +32,6 @@ export default function MultipleAnswerTemplate()
         }
         
         function fillFormWithAnswersMultiple(availableAnswers: []){
-            console.log(answer);
             return(
                 availableAnswers.map((item, index)=>{
                     return(
