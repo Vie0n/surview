@@ -14,7 +14,6 @@ export default function AddSurveyNameForm()
                 } } defaultValue={""}/>
                 <Button onClick={(ev) => {
                     ev.preventDefault();
-                    console.log("Click");
                     if (surveyName != '')
                         setPageState("overview");
                 } } text={"Akceptuj"} color={"primary"}                />

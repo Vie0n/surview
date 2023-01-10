@@ -17,7 +17,6 @@ export default function MySingleSurveyDetails(){
     useEffect(()=>{
         async function getSurveyList() {
             const answerData = await getDocs(activeQuestionAnswersQuery);
-            console.log(answerData.docs.map((doc) => ({...doc.data(), id: doc.id})));
             setAnswerData(answerData.docs.map((doc) => ({...doc.data(), id: doc.id})))
         }
         getSurveyList();
@@ -42,9 +41,7 @@ export default function MySingleSurveyDetails(){
 
     function calcAnswersSlider(){
         let totalSliderAnswers = 0;
-        console.log(answerData.length);
         for(let i = 0; i < answerData.length; i++){
-            console.log(answerData[i].answers[activeQuestionIndex].answer)
             totalSliderAnswers += parseInt(answerData[i].answers[activeQuestionIndex].answer);
         }
         return (`${(totalSliderAnswers/(answerData.length*10))*100}%`);
@@ -54,7 +51,6 @@ export default function MySingleSurveyDetails(){
 
 
     function renderAnswers(){
-        console.log(answerData.length)
                 switch(activeQuestion.type){
                     case 'Single': 
                     if(answerData.length > 0){ return(
@@ -79,7 +75,7 @@ export default function MySingleSurveyDetails(){
                             )
                         })
                     )}
-                    case 'Slider': console.log("hello");
+                    case 'Slider':
                     return(
                                 <tr>
                                     <td>{`Wynik: `}</td>
@@ -101,7 +97,6 @@ export default function MySingleSurveyDetails(){
     }
 
     function renderQuestions(){
-        console.log(activeQuestion.type);
         if (activeQuestion === undefined || activeQuestion.length <= 0) {
             return(
             <div>
