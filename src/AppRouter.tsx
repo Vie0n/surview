@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
+import RequireAuth from './components/RequireAuth'
+
 // Routes
 import RootRoute from './routes/RootRoute'
 import ErrorRoute from './routes/ErrorRoute'
@@ -33,23 +35,23 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: '/profile',
-        element: <ProfileRoute />
+        element: <RequireAuth><ProfileRoute /></RequireAuth>
       },
       {
         path: '/surveys',
-        element: <SurveyListRoute />
+        element: <RequireAuth><SurveyListRoute /></RequireAuth>
       },
       {
         path: '/survey/:id',
-        element: <SingleSurveyRoute />
+        element: <RequireAuth><SingleSurveyRoute /></RequireAuth>
       },
       {
         path: '/addsurvey',
-        element: <AddSurveyRoute />
+        element: <RequireAuth><AddSurveyRoute /></RequireAuth>
       },
       {
         path: '/mysurvey',
-        element: <MySurveysRoute />
+        element: <RequireAuth><MySurveysRoute /></RequireAuth>
       }
     ]
   }

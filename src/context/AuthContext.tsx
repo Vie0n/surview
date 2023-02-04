@@ -10,10 +10,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword, 
   GoogleAuthProvider, 
-  signInWithRedirect,
   onAuthStateChanged,
   signOut,
-  User
+  User,
+  signInWithPopup
 } from 'firebase/auth'
 
 
@@ -31,7 +31,7 @@ export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) =
   // Login with google
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider()
-    return signInWithRedirect(auth, provider)
+    return signInWithPopup(auth, provider)
   }
 
   // Login with email and password

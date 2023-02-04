@@ -6,7 +6,7 @@ export interface IAuthContextProps {
 
 export type AuthContextType = {
   createUser: (email: string, password: string) => Promise<UserCredential>,
-  googleSignIn: () => Promise<never>,
+  googleSignIn: () => Promise<UserCredential>,
   emailSignIn: (email: string, password: string) => Promise<UserCredential>,
   logOut: () => Promise<void>,
   user: User | null

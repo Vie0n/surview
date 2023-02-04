@@ -1,8 +1,11 @@
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom'
+import { useRouteError, isRouteErrorResponse, useNavigate } from 'react-router-dom'
 import JohnBlendon from '../assets/Blad.gif'
+import Button from '../components/Button'
 
 export default function Error() {
   const error = useRouteError()
+  const navigate = useNavigate()
+
 
   if (isRouteErrorResponse(error)) {
     return (
@@ -15,6 +18,11 @@ export default function Error() {
         <img src={JohnBlendon} />
         <h1>Wystąpił błąd przekierowania</h1>
         <p>{ error.statusText }</p>
+        <Button 
+          text={'Ucieknij od Błedona'} 
+          color={'primary'} 
+          onClick={() => navigate(-1)} 
+        />
       </div>
     )
   }
@@ -24,6 +32,11 @@ export default function Error() {
       <div>John Błendon odwiedził tę strone</div>
       <img src={JohnBlendon} />
       <h1>Wystąpił nieznany błąd przekierowania</h1>
+      <Button 
+        text={'Ucieknij od Błedona'} 
+        color={'primary'} 
+        onClick={() => navigate(-1)} 
+      />
     </div>
   )
 }
