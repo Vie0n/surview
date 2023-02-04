@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import MySingleSurvey from "../components/MySurveysComponents/MySingleSurvey";
-import MySingleSurveyDetails from "../components/MySurveysComponents/MySingleSurveyDetails";
 import { MySurveyContext } from "../services/MySurveyContex";
 
 import { db } from "../firebase";
