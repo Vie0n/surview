@@ -4,5 +4,5 @@ export interface IFormInputProps extends React.InputHTMLAttributes<HTMLInputElem
   fieldName: string,
   isvalid: boolean,
   errormsg: string | React.ReactNode,
-  defaultValue: string
+  defaultValue?: string
 }

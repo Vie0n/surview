@@ -8,7 +8,7 @@ import { useUserAuth } from '../context/AuthContext'
 // Components
 import GoogleButton from 'react-google-button'
 import Button from '../components/Button'
-import FromInput from '../components/FormInput'
+import FormInput from '../components/FormInput'
 
 
 export default function LoginRoute() {
@@ -50,7 +50,7 @@ export default function LoginRoute() {
     <form className='max-w-[600px] m-auto' onSubmit={(ev) => handleEmailSignIn(ev)}>
       <h1 className='text-2xl font-bold py-4'>Panel logowania</h1>
 
-      <FromInput
+      <FormInput
         fieldName='Adres email'
         type='email'
         onChange={ev => setEmail(ev.target.value)}
@@ -59,7 +59,7 @@ export default function LoginRoute() {
         required
       />
 
-      <FromInput
+      <FormInput
         fieldName='Hasło' 
         type='password'
         onChange={ev => setPwd(ev.target.value)}
