@@ -18,7 +18,7 @@ export default function RequireAuth(props: IRequireAuthProps) {
         }, 
         replace: true 
       })
-  })
+  }, [])
   
 
   return children

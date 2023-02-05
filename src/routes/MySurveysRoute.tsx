@@ -18,9 +18,8 @@ export default function MySurveysRoute() {
 
     const { user } = useUserAuth()
 
-    const mySurveyCollectionQuery = query(collection(db, "survey-list"), where("uid", "==", user.uid));
-
     useEffect(()=>{
+        const mySurveyCollectionQuery = query(collection(db, "survey-list"), where("uid", "==", user?.uid));
         async function getSurveyList() {
             const surveyListData = await getDocs(mySurveyCollectionQuery);
             setSurveyList(surveyListData.docs.map((doc) => ({...doc.data(), id: doc.id})))
@@ -81,7 +80,7 @@ export default function MySurveysRoute() {
             case "single":
                 return(<MySingleSurvey/>)
             case "details":
-                return(<MySingleSurveyDetails/>)
+                return(<h1>Error</h1>)
             default:
                 return(<h1>Error</h1>)
         }

@@ -3,12 +3,34 @@ import { useContext, useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { MySurveyContext } from "../../services/MySurveyContex";
 import Button from "../Button";
+import { Bar } from 'react-chartjs-2';
+
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    Colors
+} from 'chart.js'
+  
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Colors,
+    Title,
+    Tooltip,
+    Legend
+);
 
 export default function MySingleSurvey(){
 
     const {activeSurvey, setPage} = useContext(MySurveyContext);
 
-    const [answerData, setAnswerData] = useState({})
+    const [answerData, setAnswerData] = useState<any>({})
 
     const activeQuestionAnswersQuery = query(collection(db, "survey-answers"), where("surveyID", "==", activeSurvey.id));
 
@@ -55,40 +77,128 @@ export default function MySingleSurvey(){
     }
 
 
-    function renderAnswers(question, questionIndex){
-                switch(question.type){
-                    case 'Single': 
-                    if(answerData.length > 0){ return(
+    function renderAnswers(question: any, questionIndex: any){
+        switch(question.type){
+            case 'Single': 
+            if(answerData.length > 0){ return(
+                question.answers.map((answer:string, answerIndex:number)=>{
+                    return(
+                        <p key={answerIndex}>{`${answer}: ${calcAnswersSingle(answerIndex, questionIndex)}`}</p>
+                    )
+                })
+            )}
+            else return <p>{"Brak Odpowiedzi"}</p>
+            case 'Multiple':
+                if(answerData.length > 0){
+                    return(
                         question.answers.map((answer:string, answerIndex:number)=>{
-                            return(
-                                    <p key={answerIndex}>{`${answer}: ${calcAnswersSingle(answerIndex, questionIndex)}`}</p>
-                            )
-                        })
-                    )}
-                    else return <p>{"Brak Odpowiedzi"}</p>
-                    case 'Multiple':
-                        if(answerData.length > 0){
-                            return(
-                                question.answers.map((answer:string, answerIndex:number)=>{
-                            return(
-                                    <p key={answerIndex}>{`${question.answers[answerIndex]}: ${calcAnswersMultiple(answerIndex, questionIndex)}`}</p>
-                            )
-                        })
-                    )}
-                    else return <p>{"Brak Odpowiedzi"}</p>
-                    case 'Slider':
-                        return (calcAnswersSlider(questionIndex));
-                    case 'Open':
-                        if(answerData.length > 0){ return(
-                            answerData.map((answer:string, answerIndex:number)=>{
-                                return(
-                                        <p key={answerIndex}>{`${answerIndex+1}: ${answer.answers[questionIndex].answer}`}</p>
-                                )
-                            })
-                        )}
-                        else return <p>{"Brak Odpowiedzi"}</p>
-                    default: return( <div><h1>Brak</h1></div> )
+                    return(
+                            <p key={answerIndex}>{`${question.answers[answerIndex]}: ${calcAnswersMultiple(answerIndex, questionIndex)}`}</p>
+                    )
+                })
+            )}
+            else return <p>{"Brak Odpowiedzi"}</p>
+            case 'Slider':
+                return (calcAnswersSlider(questionIndex));
+            case 'Open':
+                if(answerData.length > 0){ return(
+                    answerData.map((answer:string, answerIndex:number)=>{
+                        return(
+                                <p key={answerIndex}>{`${answerIndex+1}: ${answer.answers[questionIndex].answer}`}</p>
+                        )
+                    })
+                )}
+                else return <p>{"Brak Odpowiedzi"}</p>
+            default: return( <div><h1>Brak</h1></div> )
+        }
+    }
+
+    function getLabels(question: any, questionIdx: number) {
+        switch (question.type) {
+            case 'Single': return [...new Set(question.answers)]
+            case 'Multiple': return [...new Set(question.answers)]
+            case 'Slider': return ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        }
+    }
+
+    function getData(question: any, questionIdx: any) {
+        switch (question.type) {
+            case 'Single': 
+                if(answerData.length > 0){
+                    const answerCount = new Array(answerData.length).fill(0)
+                    question.answers.forEach((answer:string, answerIndex:number)=>{
+                        for(let i = 0; i < answerData.length; i++){ 
+                            answerCount[answerData[i].answers[questionIdx].answer]++
+                        }
+                    })
+                    console.log(answerCount)
+                    return answerCount
                 }
+                break
+
+            case 'Multiple': 
+                if(answerData.length > 0) {
+                    const answerCount = new Array(answerData.length + 1).fill(0)
+                    question.answers.forEach((answer:string, answerIndex:number) => {
+                        for (let i = 0; i < answerData.length; i++) {
+                            if(answerData[i].answers[questionIdx].answer[answerIndex]) {
+                                console.log(answerCount)
+                                answerCount[answerIndex]++
+                            }
+                        }
+                    })
+                    return answerCount
+                }
+                break
+            
+            case 'Slider': 
+                const answerCount = new Array(10).fill(0)
+                for (let i = 0; i < answerData.length; i++){
+                    answerCount[parseInt((answerData[i].answers[questionIdx].answer - 1).toString(), 10)]++
+                }
+                return answerCount
+                break
+        }
+    }
+
+    function renderChart(question:Array<{id:number, question:string, type:string, answers:Array<[]>}>, questionIndex:number) {
+        if(question.type === 'Open') return <></>
+        
+        return (
+            <Bar
+                datasetIdKey='id'
+                data={{
+                labels: getLabels(question, questionIndex),
+                datasets: [
+                    {
+                        label: '',
+                        data: getData(question, questionIndex),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.3)',
+                            'rgba(255, 159, 64, 0.3)',
+                            'rgba(255, 205, 86, 0.3)',
+                            'rgba(75, 192, 192, 0.3)',
+                            'rgba(54, 162, 235, 0.3)',
+                            'rgba(153, 102, 255, 0.3)',
+                            'rgba(201, 203, 207, 0.3)'
+                        ]
+                    }
+                ]
+                }}
+                options={{
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+                }}
+            />
+        )
     }
 
 
@@ -104,6 +214,7 @@ export default function MySingleSurvey(){
                         <li key={questionIndex}>
                             <h2>{`Pytanie #${questionIndex+1}: ${question.question}`}</h2>
                             {renderAnswers(activeSurvey.questions[questionIndex], questionIndex)}
+                            {renderChart(question, questionIndex)}
                         </li>
                     )
                 })
