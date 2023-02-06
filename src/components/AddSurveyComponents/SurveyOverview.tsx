@@ -53,23 +53,23 @@ export default function SurveyOverview(){
 
     function renderQuestions(){
         if (stateNewSurvey.questions === undefined) {
-            return(<div>
+            return(<div className="max-w-[600px] m-auto">
                 <h1>Brak pytań</h1>
             </div>)
         }
         if (stateNewSurvey.questions.length <= 0){
-            return(<div>
+            return(<div className="max-w-[600px] m-auto">
                 <h1>Brak pytań</h1>
             </div>)
         } else{
             return(
                 stateNewSurvey.questions.map((question:Array<{id:number, question:string, type:string, answers:Array<[]>}>, questionID:number)=>{
                     return(
-                        <table key={questionID}>
-                            <thead>
+                        <table  className="mb-6 max-w-[600px] m-auto" key={questionID}>
+                            <thead> 
                                 <tr>
-                                    <th>{`Pytanie #${questionID+1}: ${question.question}`}</th>
-                                    <th>
+                                    <th className="pr-4">{`Pytanie #${questionID+1}: ${question.question}`}</th>
+                                    <th className="pr-4">
                                         <Button text={"Odpowiedzi"} color={"primary"} onClick={() =>{
                                             let newIsVisible = isVisible;
                                             newIsVisible[questionID] = !newIsVisible[questionID]
@@ -77,7 +77,7 @@ export default function SurveyOverview(){
 
                                         }}/>
                                     </th>
-                                    <th>
+                                    <th className="pr-4">
                                         <Button text={"Edytuj"} color={"info"}onClick={() =>{
                                             setActiveQuestionIndex(questionID);
                                             setActiveQuestion(question);
@@ -108,25 +108,27 @@ export default function SurveyOverview(){
     
     return(
         <div>
-            <div>
-                <p className='text-xl'>{surveyName}</p>
+            <div className="max-w-[600px] m-auto">
+                <p className='text-xl font-bold'>{surveyName}</p>
             </div>
             <div>
                 {renderQuestions()}
             </div>
-            <Button text={"Dodaj Pytanie"} color={"primary"} onClick={() =>{
-                setPageState("addQuestion");
-            }}/>
-            { questionIndex>0 ? 
-                <Button text={"Publikuj Ankiete"} color={"primary"} onClick={() =>{
-                    let newStateNewSurvey = stateNewSurvey;
-                    newStateNewSurvey.name = surveyName;
-                    addToDatabase(newStateNewSurvey);
-                    alert("Dodano Ankiete.")
-                    navigate("/mysurvey")
-                }}/> :
-                <></>
-            }
+            <div className="flex max-w-[600px] m-auto justify-evenly">
+                <Button text={"Dodaj Pytanie"} color={"primary"} onClick={() =>{
+                    setPageState("addQuestion");
+                }}/>
+                { questionIndex>0 ? 
+                    <Button text={"Publikuj Ankiete"} color={"primary"} onClick={() =>{
+                        let newStateNewSurvey = stateNewSurvey;
+                        newStateNewSurvey.name = surveyName;
+                        addToDatabase(newStateNewSurvey);
+                        alert("Dodano Ankiete.")
+                        navigate("/mysurvey")
+                    }}/> :
+                    <></>
+                }
+            </div>
         </div>
     )
 }

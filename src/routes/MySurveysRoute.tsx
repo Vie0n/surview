@@ -32,12 +32,8 @@ export default function MySurveysRoute() {
 
     function renderSurveyList(){
         return(
-            <div>
-                <table>
-                    <tbody>
-                        {fillSurveyList()}
-                    </tbody>
-                </table>
+            <div className="grid place-content-center grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {fillSurveyList()}
             </div>
         )
     }
@@ -52,14 +48,10 @@ export default function MySurveysRoute() {
         return(
             result.map((item, i) => {
                 return(
-                    <tr key={i} onClick={()=>{goToSurvey(i)}}>
-                        <td>
-                            {item[i].name}
-                        </td>
-                        <td>
-                            <img src={item[i].imgURL} alt={item[i].name} />
-                        </td>
-                    </tr>
+                    <div onClick={()=>{goToSurvey(i)}} key={i} className="pt-8 duration-150 hover:text-blue-600 cursor-pointer text-center text-gray-900 text-lg font-medium mb-2 flex flex-col rounded-lg shadow-lg bg-white max-w-sm h-full p-5" key={i} >
+                        <h5>Ankieta:</h5>
+                        <h5>{item[i].name}</h5>
+                    </div>
                 )
             })
         )
@@ -90,7 +82,7 @@ export default function MySurveysRoute() {
     return (
         <MySurveyContext.Provider value={{activeSurvey, setActiveSurvey, surveyID, setPage, activeQuestionIndex, setActiveQuestionIndex, activeQuestion, setActiveQuestion}}>
             <div>
-                <p className='text-xl'>Moje Ankiety</p>
+                <p className='text-3xl w-full text-center mb-4'>Moje Ankiety</p>
             </div>
             <div>
                 {renderPage()}

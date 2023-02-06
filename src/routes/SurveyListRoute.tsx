@@ -22,12 +22,8 @@ export default function SurveyListRoute() {
 
     function renderSurveyList(){
         return(
-            <div>
-                <table>
-                    <tbody>
-                        {fillSurveyList()}
-                    </tbody>
-                </table>
+            <div className="grid place-content-center grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {fillSurveyList()}
             </div>
         )
     }
@@ -42,14 +38,9 @@ export default function SurveyListRoute() {
         return(
             result.map((item, i) => {
                 return(
-                    <tr key={i} onClick={()=>{goToSurvey(item[i].id)}}>
-                        <td>
-                            {item[i].name}
-                        </td>
-                        <td>
-                            <img src={item[i].imgURL} alt={item[i].name} />
-                        </td>
-                    </tr>
+                    <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm h-full p-5" key={i} >
+                        <h5 onClick={()=>{goToSurvey(item[i].id)}} className='duration-150 hover:text-blue-600 cursor-pointer text-center text-gray-900 text-xl font-medium mb-2'>{item[i].name}</h5>
+                    </div>
                 )
             })
         )

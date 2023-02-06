@@ -49,7 +49,7 @@ export default function AddSurveyRoute() {
     return (
         <>
             <div>
-                <p className='text-xl'>Nowa Ankieta</p>
+                <p className='mt-24 text-xl max-w-[600px] m-auto'>Nowa Ankieta</p>
             </div>
             <AddSurveyContext.Provider value={{
                 surveyName,

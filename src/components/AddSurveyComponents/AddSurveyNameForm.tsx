@@ -8,7 +8,7 @@ export default function AddSurveyNameForm()
         const {surveyName, setSurveyName, setPageState} = useContext(AddSurveyContext);
 
         return(
-            <form>
+            <form className="max-w-[600px] m-auto">
                     <FormInputValidate fieldName={"Nazwa Ankiety"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
                     setSurveyName(ev.target.value);
                 } } defaultValue={""}/>

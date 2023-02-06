@@ -126,8 +126,8 @@ export default function EditQuestionForm(){
     }
 
     return(
-        <form>
-            <>
+        <form className="max-w-[600px] m-auto">
+            <div>
                 <h2>Nowe Pytanie</h2>
                 <FormInputValidate fieldName={"Podaj pytanie"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
                         setQuestionName(ev.target.value)
@@ -144,20 +144,22 @@ export default function EditQuestionForm(){
                     </select>
                 </div>
                 {typeManager()}
-                <Button text={"Akceptuj"} color={"primary"} onClick={(ev)=>{
-                    ev.preventDefault();
-                    let newStateNewSurvey = stateNewSurvey;
-                    let newJSON = {"question": questionName,"type": questionType, "answers": {}}
-                    if (questionType === "Single" || questionType === "Multiple") newJSON.answers = answer; 
-                    else newJSON.answers = [];
-                    newStateNewSurvey.questions[activeQuestionIndex] = newJSON;
-                    setStateNewSurvey(newStateNewSurvey);
-                    setPageState("overview");
-                }} disabled={!checkValidity(questionType)}/>
-                <Button text={"Wstecz"} color={"primary"} onClick={() => {
-                    setPageState("overview");
-                }}/>
-            </>
+                <div className="flex max-w-[600px] m-auto justify-evenly mt-4">
+                    <Button text={"Akceptuj"} color={"primary"} onClick={(ev)=>{
+                        ev.preventDefault();
+                        let newStateNewSurvey = stateNewSurvey;
+                        let newJSON = {"question": questionName,"type": questionType, "answers": {}}
+                        if (questionType === "Single" || questionType === "Multiple") newJSON.answers = answer; 
+                        else newJSON.answers = [];
+                        newStateNewSurvey.questions[activeQuestionIndex] = newJSON;
+                        setStateNewSurvey(newStateNewSurvey);
+                        setPageState("overview");
+                    }} disabled={!checkValidity(questionType)}/>
+                    <Button text={"Wstecz"} color={"primary"} onClick={() => {
+                        setPageState("overview");
+                    }}/>
+                </div>
+            </div>
         </form>
     )
 }

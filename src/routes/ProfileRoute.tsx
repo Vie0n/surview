@@ -12,7 +12,7 @@ export default function ProfileRoute() {
   }
 
   return (
-    <div>
+    <div className='max-w-[600px] m-auto'>
       <p className='text-xl'>Profil użytkownika:</p>
       <p>Nazwa użytkownika: { user?.displayName || user?.email }</p>
       <Button color='danger' onClick={handleSignOut} text='Wyloguj' />

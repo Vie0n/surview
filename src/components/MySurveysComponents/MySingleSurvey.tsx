@@ -131,7 +131,6 @@ export default function MySingleSurvey(){
                             answerCount[answerData[i].answers[questionIdx].answer]++
                         }
                     })
-                    console.log(answerCount)
                     return answerCount
                 }
                 break
@@ -142,7 +141,6 @@ export default function MySingleSurvey(){
                     question.answers.forEach((answer:string, answerIndex:number) => {
                         for (let i = 0; i < answerData.length; i++) {
                             if(answerData[i].answers[questionIdx].answer[answerIndex]) {
-                                console.log(answerCount)
                                 answerCount[answerIndex]++
                             }
                         }
@@ -211,8 +209,8 @@ export default function MySingleSurvey(){
             return(
                 activeSurvey.questions.map((question:Array<{id:number, question:string, type:string, answers:Array<[]>}>, questionIndex:number)=>{
                     return(
-                        <li key={questionIndex}>
-                            <h2>{`Pytanie #${questionIndex+1}: ${question.question}`}</h2>
+                        <li className="pt-6" key={questionIndex}>
+                            <h2 className="text-2xl">{`Pytanie #${questionIndex+1}: ${question.question}`}</h2>
                             {renderAnswers(activeSurvey.questions[questionIndex], questionIndex)}
                             {renderChart(question, questionIndex)}
                         </li>
@@ -226,14 +224,12 @@ export default function MySingleSurvey(){
     
     return(
         <div>
+            <Button text={"Wstecz"} color={"primary"} onClick={()=>{setPage("list")}} />
             <div>
-                <p className='text-xl'>{activeSurvey.name}</p>
-            </div>
-            <Button text={"Wstecz"} color={"primary"} onClick={()=>{
-                setPage("list")
-            }}/>
-            <div>
-                <ol>
+                <ol className="max-w-[600px] m-auto">
+                <div>
+                    <p className='py-4 text-2xl'>Ankieta: <span className="font-bold">{activeSurvey.name}</span></p>
+                </div>
                     {renderQuestions()}
                 </ol>
             </div>
