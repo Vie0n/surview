@@ -8,14 +8,17 @@ export default function SliderTemplate()
         const [isValid, setValid] = useState<boolean>(true);
         const [answer, setAnswer] = useState<string>("1")
         return(
-            <form>
+            <form className="max-w-[600px] m-auto justify-center">
                 <h1>{questions[currentQuestionID].question}</h1><br/>
                 <div>
-                    <input type="range" name="rangeTemplate" id="slider" min="1" max="10" defaultValue="0" onChange={()=>{
+                    <input className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" type="range" name="rangeTemplate" id="slider" min="1" max="10" defaultValue="0" onChange={()=>{
                         setAnswer((document.getElementById("slider") as HTMLInputElement).value)
                     }} />
-                    <label>{answer}</label>
+                    <div className="flex justify-center">
+                        <label className="text-lg font-bold">{answer}</label>
+                    </div>
                 </div>
+                <br/>
                 <div>
                     <SurveyButtonsManager {...{answer, isValid}}/>
                 </div>

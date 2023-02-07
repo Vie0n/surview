@@ -9,7 +9,7 @@ export default function OpenTemplate()
         const [isValid, setValid] = useState <boolean>(false);
         const {questions, currentQuestionID} = useContext(SurveyContext);
         return(
-            <form>
+            <form className="max-w-[600px] m-auto">
                 <FormInputValidate fieldName={questions[currentQuestionID].question} setState={function (ev: ChangeEvent<HTMLInputElement>): void {
                     setAnswer(ev.target.value);
                     setValid(ev.target.value.length > 0)

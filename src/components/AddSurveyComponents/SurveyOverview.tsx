@@ -38,7 +38,7 @@ export default function SurveyOverview(){
                     stateNewSurvey.questions[questionIndex].answers.map((answer:string, answerIndex:number)=>{
                         return(
                             <tr key={answerIndex}>
-                                <td>{`Odpowiedź #${answerIndex+1}: ${answer}`}</td>
+                                <td>{`#${answerIndex+1}: ${answer}`}</td>
                             </tr>
                         )
                     })

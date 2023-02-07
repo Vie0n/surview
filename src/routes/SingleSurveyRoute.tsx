@@ -82,7 +82,7 @@ export default function SingleSurveyRoute() {
     }
     return (
         <SurveyContext.Provider value = {{questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers, surveyID, recipt, navigate}}>
-            <div>
+            <div className="grid place-items-center">
                 <p className='text-xl'>{surveyDesc}</p>
                 <div>
                     {surveyManager()}

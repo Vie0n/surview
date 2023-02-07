@@ -20,15 +20,17 @@ export default function SingleAnswerTemplate()
             return(
                 availableAnswers.map((item, index)=>{
                     return(
-                        <li key={index}>
-                            <label>{availableAnswers[index]}</label>
-                            <input type="radio" name="SingleAnswer" id={index.toString()}
-                                onChange={(ev)=>{
-                                    checkValidity(availableAnswers);
-                                    setAnswer(index);
-                                }}
-                            /><br/>
-                        </li>
+                        <tr key={index}>
+                            <td>{availableAnswers[index]}</td>
+                            <td>
+                                <input type="radio" name="SingleAnswer" id={index.toString()}
+                                    onChange={(ev)=>{
+                                        checkValidity(availableAnswers);
+                                        setAnswer(index);
+                                    }}
+                                />
+                            </td>
+                        </tr>
                     )
                 })
             )
@@ -42,11 +44,15 @@ export default function SingleAnswerTemplate()
 
 
         return(
-            <form>
-                <h1>{questions[currentQuestionID].question}</h1><br/>
-                <div>
-                    {fillFormWithAnswersSingle(questions[currentQuestionID].answers)}
-                </div>
+            <form className="max-w-[600px] m-auto">
+                <table>
+                    <thead>
+                        <tr><th>{questions[currentQuestionID].question}</th></tr>
+                    </thead>
+                    <tbody>
+                        {fillFormWithAnswersSingle(questions[currentQuestionID].answers)}
+                    </tbody>
+                </table>
                 <SurveyButtonsManager {...{answer, isValid}}/>
             </form>
         )

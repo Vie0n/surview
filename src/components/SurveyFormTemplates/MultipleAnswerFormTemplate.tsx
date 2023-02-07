@@ -35,16 +35,18 @@ export default function MultipleAnswerTemplate()
             return(
                 availableAnswers.map((item, index)=>{
                     return(
-                        <li key={index}>
-                            <label>{availableAnswers[index]}</label>
+                        <tr key={index}>
+                            <td>{availableAnswers[index]}</td>
+                            <td>
                             <input type="checkbox" name="MultipleAnswer" id={index.toString()}
                             onChange={(ev)=>{
                                     checkValidity(availableAnswers);
                                     let newAnswer = answer;
                                     newAnswer[index] = ev.target.checked;
                                     setAnswer(newAnswer);
-                                }}/><br/>
-                        </li>
+                                }}/>
+                            </td>
+                        </tr>
                     )
                 })
             )
@@ -55,10 +57,14 @@ export default function MultipleAnswerTemplate()
 
         return(
             <form>
-                <h1>{questions[currentQuestionID].question}</h1><br/>
-                <div>
-                    {fillFormWithAnswersMultiple(questions[currentQuestionID].answers)}
-                </div>
+                <table>
+                    <thead>
+                        <tr><th>{questions[currentQuestionID].question}</th></tr>
+                    </thead>
+                    <tbody>
+                        {fillFormWithAnswersMultiple(questions[currentQuestionID].answers)}
+                    </tbody>
+                </table>
                 <SurveyButtonsManager {...{answer, isValid}}/>
             </form>
         )

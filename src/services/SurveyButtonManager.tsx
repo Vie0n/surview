@@ -55,7 +55,7 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
         switch(currentQuestionID){
             case 0:
                 return(
-                    <div>
+                    <div className="flex gap-4 justify-center">
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
@@ -65,7 +65,7 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                 )
             case lastQuestionID:
                 return(
-                    <div>
+                    <div className="flex gap-4 justify-center">
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
@@ -82,12 +82,12 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                 )
             default:
                 return(
-                    <div>
+                    <div className="flex gap-4 justify-center">
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
                             undoAnswer();
-                        } } text={"previous"} color={"primary"} />
+                        } } text={"Previous"} color={"primary"} />
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
