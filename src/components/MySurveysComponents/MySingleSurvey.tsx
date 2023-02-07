@@ -125,19 +125,17 @@ export default function MySingleSurvey(){
         switch (question.type) {
             case 'Single': 
                 if(answerData.length > 0){
-                    const answerCount = new Array(answerData.length).fill(0)
-                    question.answers.forEach((answer:string, answerIndex:number)=>{
-                        for(let i = 0; i < answerData.length; i++){ 
-                            answerCount[answerData[i].answers[questionIdx].answer]++
-                        }
-                    })
+                    const answerCount = new Array(question.answers.length).fill(0)
+                    for(let i = 0; i < answerData.length; i++){ 
+                        answerCount[answerData[i].answers[questionIdx].answer]++
+                    }
                     return answerCount
                 }
                 break
 
             case 'Multiple': 
                 if(answerData.length > 0) {
-                    const answerCount = new Array(answerData.length + 1).fill(0)
+                    const answerCount = new Array(question.answers.length).fill(0)
                     question.answers.forEach((answer:string, answerIndex:number) => {
                         for (let i = 0; i < answerData.length; i++) {
                             if(answerData[i].answers[questionIdx].answer[answerIndex]) {
