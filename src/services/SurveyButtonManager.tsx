@@ -60,7 +60,7 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
                             addAnswer();
-                        } } text={"Dalej"} color={"primary"} disabled={!props.isValid} />
+                        } } text={"Następne"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
             case lastQuestionID:
@@ -70,7 +70,7 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
                             undoAnswer();
-                        } } text={"Wstecz"} color={"primary"} />
+                        } } text={"Poprzednie"} color={"primary"} />
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             addAnswer();
@@ -87,12 +87,12 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
                             undoAnswer();
-                        } } text={"Wstecz"} color={"primary"} />
+                        } } text={"Poprzednie"} color={"primary"} />
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
                             addAnswer();
-                        } } text={"Dalej"} color={"primary"} disabled={!props.isValid} />
+                        } } text={"Następne"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
         }

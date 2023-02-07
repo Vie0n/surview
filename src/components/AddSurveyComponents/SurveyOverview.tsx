@@ -108,6 +108,11 @@ export default function SurveyOverview(){
     
     return(
         <div>
+            <div className="grid grid-cols-3 gap-4 place-items-start">
+            <Button text={"Wstecz"} color={"primary"} onClick={()=>{
+                setPageState("addName");
+            }}/>
+            </div>
             <div className="max-w-[600px] m-auto">
                 <p className='text-xl font-bold'>{surveyName}</p>
             </div>

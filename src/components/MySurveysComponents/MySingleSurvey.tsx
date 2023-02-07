@@ -222,7 +222,9 @@ export default function MySingleSurvey(){
     
     return(
         <div>
-            <Button text={"Wstecz"} color={"primary"} onClick={()=>{setPage("list")}} />
+            <div className="grid grid-cols-3 gap-4 place-items-start">
+                <Button text={"Wstecz"} color={"primary"} onClick={()=>{setPage("list")}} />
+            </div>
             <div>
                 <ol className="max-w-[600px] m-auto">
                 <div>

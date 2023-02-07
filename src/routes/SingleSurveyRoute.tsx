@@ -82,6 +82,11 @@ export default function SingleSurveyRoute() {
     }
     return (
         <SurveyContext.Provider value = {{questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers, surveyID, recipt, navigate}}>
+            <div className="grid grid-cols-3 gap-4 place-items-start">
+            <Button text={"Wstecz"} color={"primary"} onClick={()=>{
+                    navigate(`/surveys`)
+            }}/>
+            </div>
             <div className="grid place-items-center">
                 <p className='text-xl'>{surveyDesc}</p>
                 <div>

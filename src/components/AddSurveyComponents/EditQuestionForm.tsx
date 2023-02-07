@@ -126,6 +126,12 @@ export default function EditQuestionForm(){
     }
 
     return(
+        <div>
+            <div className="grid grid-cols-3 gap-4 place-items-start">
+            <Button text={"Wstecz"} color={"primary"} onClick={()=>{
+                setPageState("overview");
+            }}/>
+            </div>
         <form className="max-w-[600px] m-auto">
             <div>
                 <h2>Nowe Pytanie</h2>
@@ -161,5 +167,6 @@ export default function EditQuestionForm(){
                 </div>
             </div>
         </form>
+        </div>    
     )
 }

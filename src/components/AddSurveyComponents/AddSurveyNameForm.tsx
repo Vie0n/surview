@@ -8,19 +8,24 @@ export default function AddSurveyNameForm()
         const {surveyName, setSurveyName, surveyDesc, setSurveyDesc, setPageState} = useContext(AddSurveyContext);
 
         return(
-            <form className="max-w-[600px] m-auto">
+            <div>
+                <div>
+                    <p className='mt-24 text-xl max-w-[600px] m-auto'>Nowa Ankieta</p>
+                </div>
+                <form className="max-w-[600px] m-auto">
                     <FormInputValidate fieldName={"Nazwa Ankiety*"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
                     setSurveyName(ev.target.value);
-                } } defaultValue={""}/>
+                } } defaultValue={surveyName}/>
                 <FormInputValidate fieldName={"Opis Ankiety*"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
                     setSurveyDesc(ev.target.value);
-                } } defaultValue={""}/>
+                } } defaultValue={surveyDesc}/>
                 <Button onClick={(ev) => {
                     ev.preventDefault();
                     if (surveyName != '' && surveyDesc != '')
                         setPageState("overview");
                     else alert("Proszę wypełnić oba pola.")
-                } } text={"Akceptuj"} color={"primary"}                />
-            </form>
+                } } text={"Akceptuj"} color={"primary"}/>
+                </form>
+            </div>
         )
     }

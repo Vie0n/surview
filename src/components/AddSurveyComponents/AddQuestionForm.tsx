@@ -120,7 +120,13 @@ export default function AddQuestionForm(){
     }
 
     return(
-        <form className="max-w-[600px] m-auto">
+        <div>
+            <div className="grid grid-cols-3 gap-4 place-items-start">
+            <Button text={"Wstecz"} color={"primary"} onClick={()=>{
+                setPageState("overview");
+            }}/>
+            </div>
+            <form className="max-w-[600px] m-auto">
             <div>
                 <h2>Nowe Pytanie</h2>
                 <FormInputValidate fieldName={"Podaj pytanie"} setState={(ev: ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +164,7 @@ export default function AddQuestionForm(){
                     </div>
             </div>
         </form>
+        </div>
     )
 
 }

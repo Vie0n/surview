@@ -32,8 +32,13 @@ export default function MySurveysRoute() {
 
     function renderSurveyList(){
         return(
-            <div className="grid place-content-center grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {fillSurveyList()}
+            <div>
+                <div>
+                    <p className='text-3xl w-full text-center mb-4'>Moje Ankiety</p>
+                </div>
+                <div className="grid place-content-center grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {fillSurveyList()}
+                </div>
             </div>
         )
     }
@@ -81,9 +86,6 @@ export default function MySurveysRoute() {
     
     return (
         <MySurveyContext.Provider value={{activeSurvey, setActiveSurvey, surveyID, setPage, activeQuestionIndex, setActiveQuestionIndex, activeQuestion, setActiveQuestion}}>
-            <div>
-                <p className='text-3xl w-full text-center mb-4'>Moje Ankiety</p>
-            </div>
             <div>
                 {renderPage()}
             </div>
