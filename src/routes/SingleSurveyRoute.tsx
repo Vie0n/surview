@@ -21,6 +21,7 @@ export default function SingleSurveyRoute() {
     const [recipt, setRecipt] = useState('');
     const [validRecipt, setValidRecipt] = useState(false);
     const [questions, setQuestions] = useState<Array<{}>>([])
+    const [surveyDesc, setSurveyDesc] = useState<string>('');
     const [currentQuestionID, setCurrentQuestionID] = useState(0)
     const [stateAnswers, setStateAnswers] = useState<Array<{}>>([])
 
@@ -38,6 +39,7 @@ export default function SingleSurveyRoute() {
             const surveyListData = await getDocs(surveyCollectionRef);
             const activeSurvey = surveyListData.docs.map((doc) => ({...doc.data(), id: doc.id})).filter((ob:object)=> {return ob.id === id});
             setQuestions(activeSurvey[0].questions)
+            setSurveyDesc(activeSurvey[0].description)
         }
         getSurveyList();
         setSurveyID(id)
@@ -81,7 +83,7 @@ export default function SingleSurveyRoute() {
     return (
         <SurveyContext.Provider value = {{questions, currentQuestionID, setCurrentQuestionID, stateAnswers, setStateAnswers, surveyID, recipt, navigate}}>
             <div>
-                <p className='text-xl'>Survey ID: {surveyID}</p>
+                <p className='text-xl'>{surveyDesc}</p>
                 <div>
                     {surveyManager()}
                 </div>

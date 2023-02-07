@@ -49,8 +49,8 @@ export default function MySurveysRoute() {
             result.map((item, i) => {
                 return(
                     <div onClick={()=>{goToSurvey(i)}} key={i} className="pt-8 duration-150 hover:text-blue-600 cursor-pointer text-center text-gray-900 text-lg font-medium mb-2 flex flex-col rounded-lg shadow-lg bg-white max-w-sm h-full p-5" key={i} >
-                        <h5>Ankieta:</h5>
                         <h5>{item[i].name}</h5>
+                        <div className="text-sm"><h5>{item[i].description.slice(0,100)}</h5></div>
                     </div>
                 )
             })

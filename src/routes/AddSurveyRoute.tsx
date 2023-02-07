@@ -11,6 +11,7 @@ import {collection, getDocs} from "firebase/firestore";
 
 export default function AddSurveyRoute() {
     const [surveyName, setSurveyName] = useState <string>('')
+    const [surveyDesc, setSurveyDesc] = useState <string>('')
     const [questionIndex, setQuestionIndex] = useState <number>(0);
     const [pageState, setPageState] = useState <string>("addName");
     const [stateNewSurvey, setStateNewSurvey] = useState({})
@@ -23,7 +24,7 @@ export default function AddSurveyRoute() {
         let newSurvey = {
             "uid":user !== null ? user.uid : "?",
             "name":"",
-            "imgURL":"",
+            "description":"",
             "questions":[]
         };
         setStateNewSurvey(newSurvey);
@@ -54,6 +55,8 @@ export default function AddSurveyRoute() {
             <AddSurveyContext.Provider value={{
                 surveyName,
                 setSurveyName,
+                surveyDesc,
+                setSurveyDesc,
                 setPageState,
                 stateNewSurvey,
                 setStateNewSurvey,

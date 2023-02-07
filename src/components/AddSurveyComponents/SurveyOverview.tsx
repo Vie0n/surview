@@ -24,7 +24,7 @@ export default function SurveyOverview(){
 
     },[])
 
-    const {surveyName, stateNewSurvey, setStateNewSurvey, questionIndex, setQuestionIndex, setPageState, setActiveQuestion, setActiveQuestionIndex} = useContext(AddSurveyContext);
+    const {surveyName, surveyDesc, stateNewSurvey, setStateNewSurvey, questionIndex, setQuestionIndex, setPageState, setActiveQuestion, setActiveQuestionIndex} = useContext(AddSurveyContext);
 
     async function addToDatabase(payload:object){
         await addDoc(surveyCollectionRef, payload);
@@ -111,6 +111,9 @@ export default function SurveyOverview(){
             <div className="max-w-[600px] m-auto">
                 <p className='text-xl font-bold'>{surveyName}</p>
             </div>
+            <div className="max-w-[600px] m-auto">
+                <p className='text-l font-bold'>{surveyDesc}</p>
+            </div>
             <div>
                 {renderQuestions()}
             </div>
@@ -122,6 +125,7 @@ export default function SurveyOverview(){
                     <Button text={"Publikuj Ankiete"} color={"primary"} onClick={() =>{
                         let newStateNewSurvey = stateNewSurvey;
                         newStateNewSurvey.name = surveyName;
+                        newStateNewSurvey.description = surveyDesc;
                         addToDatabase(newStateNewSurvey);
                         alert("Dodano Ankiete.")
                         navigate("/mysurvey")

@@ -38,8 +38,9 @@ export default function SurveyListRoute() {
         return(
             result.map((item, i) => {
                 return(
-                    <div className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm h-full p-5" key={i} >
-                        <h5 onClick={()=>{goToSurvey(item[i].id)}} className='duration-150 hover:text-blue-600 cursor-pointer text-center text-gray-900 text-xl font-medium mb-2'>{item[i].name}</h5>
+                    <div onClick={()=>{goToSurvey(item[i].id)}} className="flex flex-col rounded-lg shadow-lg bg-white max-w-sm h-full p-5 duration-150 hover:text-blue-600 cursor-pointer text-center text-gray-900 text-xl font-medium mb-2" key={i} >
+                        <h5>{item[i].name}</h5>
+                        <div className="text-sm"><h5>{item[i].description.slice(0,100)}</h5></div>
                     </div>
                 )
             })
@@ -58,7 +59,7 @@ export default function SurveyListRoute() {
     return (
         <>
             <div>
-                <p className='text-xl'>Survey List:</p>
+                <p className='text-3xl w-full text-center mb-4'>Ankiety</p>
             </div>
             <div>
                 {renderSurveyList()}

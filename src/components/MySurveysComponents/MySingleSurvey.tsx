@@ -229,6 +229,7 @@ export default function MySingleSurvey(){
                 <ol className="max-w-[600px] m-auto">
                 <div>
                     <p className='py-4 text-2xl'>Ankieta: <span className="font-bold">{activeSurvey.name}</span></p>
+                    <p className='py-4 text-2xl'><span>{activeSurvey.description}</span></p>
                 </div>
                     {renderQuestions()}
                 </ol>
