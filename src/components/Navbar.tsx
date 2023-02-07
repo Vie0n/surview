@@ -29,9 +29,9 @@ export default function Navbar() {
         </h1>
         <ul className='hidden md:flex items-center text-base font-semibold cursor-pointer'>
           <NavbarLink to='/home' text='Strona główna' />
-          <NavbarLink to='/surveys' text='Ankiety' />
           {user ?
           <>
+            <NavbarLink to='/surveys' text='Ankiety' />
             <NavbarLink to='/addsurvey' text='Dodaj Ankiete' />
             <NavbarLink to='/mysurvey' text='Moje Ankiety' />
           </>
@@ -74,18 +74,28 @@ export default function Navbar() {
             to='/home' 
             text='Home' 
           />
-          <NavbarLink 
-            icon={<SurveyIcon className='mr-2' />} 
-            role='mobile' 
-            to='/surveys' 
-            text='Ankiety' 
-          />
-          <NavbarLink 
-            icon={<SurveyIcon className='mr-2' />} 
-            role='mobile' 
-            to='/addsurvey' 
-            text='Dodaj Ankiete' 
-          />
+          { user && 
+            <>
+              <NavbarLink 
+                icon={<SurveyIcon className='mr-2' />} 
+                role='mobile' 
+                to='/surveys' 
+                text='Ankiety' 
+              />
+              <NavbarLink 
+                icon={<SurveyIcon className='mr-2' />} 
+                role='mobile' 
+                to='/addsurvey' 
+                text='Dodaj Ankiete' 
+              />
+              <NavbarLink 
+                icon={<SurveyIcon className='mr-2' />} 
+                role='mobile' 
+                to='/mysurvey' 
+                text='Moje Ankiety' 
+              />
+            </>
+          }
           { !user && 
             <NavbarLink 
               icon={<UserPlusIcon className='mr-2' />} 

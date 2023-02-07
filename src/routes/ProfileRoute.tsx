@@ -2,13 +2,17 @@ import { useUserAuth } from '../context/AuthContext'
 
 // Components
 import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function ProfileRoute() {
   const { user, logOut } = useUserAuth()
+  const navigate = useNavigate()
+
 
   const handleSignOut = async () => { 
     logOut().catch(err => console.error(err))
+    navigate('../home')
   }
 
   return (
