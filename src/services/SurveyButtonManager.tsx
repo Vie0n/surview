@@ -60,7 +60,7 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
                             addAnswer();
-                        } } text={"Next"} color={"primary"} disabled={!props.isValid} />
+                        } } text={"Dalej"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
             case lastQuestionID:
@@ -70,14 +70,14 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
                             undoAnswer();
-                        } } text={"previous"} color={"primary"} />
+                        } } text={"Wstecz"} color={"primary"} />
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             addAnswer();
                             publishAnswers();
                             alert("Ankieta została wysłana.")
                             navigate("/surveys/")
-                        } } text={"Finish"} color={"primary"} disabled={!props.isValid} />
+                        } } text={"Wyślij Ankiete"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
             default:
@@ -87,12 +87,12 @@ export default function SurveyButtonsManager( props: { answer: number|Array<bool
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID - 1);
                             undoAnswer();
-                        } } text={"Previous"} color={"primary"} />
+                        } } text={"Wstecz"} color={"primary"} />
                         <Button onClick={(ev) => {
                             ev.preventDefault();
                             setCurrentQuestionID(currentQuestionID + 1);
                             addAnswer();
-                        } } text={"Next"} color={"primary"} disabled={!props.isValid} />
+                        } } text={"Dalej"} color={"primary"} disabled={!props.isValid} />
                     </div>
                 )
         }
