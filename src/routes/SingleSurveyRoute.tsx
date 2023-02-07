@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState, useContext, ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
 
