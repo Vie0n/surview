@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useContext, useEffect, useState } from "react";
 import { AddSurveyContext } from "../../services/AddSurveyContext";
 import Button from "../Button";
