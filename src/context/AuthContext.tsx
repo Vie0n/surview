@@ -45,6 +45,7 @@ export const AuthContextProvider: React.FC<IAuthContextProps> = ({ children }) =
     const unsub = onAuthStateChanged(auth, (currUser) => setUser(currUser))
     return () => unsub()
     // Comment
+    // Comment 2
   }, [])
 
   return (
